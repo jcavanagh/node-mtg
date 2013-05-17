@@ -1,0 +1,29 @@
+{
+  "name": "mtg",
+  "version": "0.0.1",
+  "description": "Magic: The Gathering rules enforcement engine",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jcavanagh/node-mtg.git"
+  },
+  "keywords": [
+    "magic",
+    "gathering",
+    "mtg"
+  ],
+  "author": "jcavanagh",
+  "license": "BSD",
+  "dependencies": {
+    "amdefine": ">=0.0.5",
+    "express": ">=3.0",
+    "jade": "*"
+  },
+  "devDependencies": {
+
+  }
+}
