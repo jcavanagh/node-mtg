@@ -7,6 +7,7 @@ if (typeof define !== 'function') { var define = require('amdefine')(module) }
  **/
 define([    
     'underscore'
+    ,'./common/Config'
     ,'express'
     ,'http'
     ,'./routes/index'
@@ -15,6 +16,7 @@ define([
     ,'./routes/user'
 ], function(
     _
+    ,config
     ,express
     ,http
     ,index
@@ -45,11 +47,14 @@ define([
     app.get('/', index.index);
     app.get('/users', user.list);
 
-    //Start server
-    http.createServer(app).listen(app.get('port'), function(){
-      console.log('Express server listening on port ' + app.get('port'));
-    });
-
     //Underscore extensions
     _.str = underscoreStr;
+
+    //Wait for config
+    config.onConfigLoaded(function() {
+        //Start server
+        http.createServer(app).listen(app.get('port'), function(){
+          console.log('Express server listening on port ' + app.get('port'));
+        });
+    }, this);
 });
