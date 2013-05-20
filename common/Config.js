@@ -33,7 +33,7 @@ define(['fs', 'path'], function(fs, path) {
          * @return {Object} Value if found, or null
          */
         get: function(key) {
-            if(this.config && key) {
+            if(this.config && key && typeof key === 'string') {
                 var keys = key.split('.')
                     ,configScope = this.config;
 

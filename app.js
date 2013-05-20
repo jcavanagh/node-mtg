@@ -7,7 +7,7 @@ if (typeof define !== 'function') { var define = require('amdefine')(module) }
  **/
 define([    
     'underscore'
-    ,'./common/Config'
+    ,'common/Config'
     ,'express'
     ,'http'
     ,'./routes/index'
@@ -57,4 +57,6 @@ define([
           console.log('Express server listening on port ' + app.get('port'));
         });
     }, this);
+
+    return app;
 });
