@@ -11,6 +11,7 @@ define([
     ,'http'
     ,'./routes/index'
     ,'path'
+    ,'underscore.string'
     ,'./routes/user'
 ], function(
     _
@@ -18,11 +19,13 @@ define([
     ,http
     ,index
     ,path
+    ,underscoreStr
     ,user
 ) {
+    //Create app
     var app = express();
 
-    // all environments
+    //Set app parameters
     app.set('port', process.env.PORT || 3001);
     app.set('views', __dirname + '/views');
     app.set('view engine', 'jade');
@@ -38,11 +41,15 @@ define([
       app.use(express.errorHandler());
     }
 
+    //Set routes
     app.get('/', index.index);
     app.get('/users', user.list);
 
+    //Start server
     http.createServer(app).listen(app.get('port'), function(){
       console.log('Express server listening on port ' + app.get('port'));
     });
-});
 
+    //Underscore extensions
+    _.str = underscoreStr;
+});

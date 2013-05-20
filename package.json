@@ -22,7 +22,8 @@
     "amdefine": ">=0.0.5",
     "express": ">=3.0",
     "jade": "*",
-    "underscore": ">=1.4.4"
+    "underscore": ">=1.4.4",
+    "underscore.string": ">=2.3.0"
   },
   "devDependencies": {
 
