@@ -10,23 +10,23 @@ define([
     ,'async'
     ,'common/Config'
     ,'fs-extra'
-    ,'path'
     ,'request'
 ], function(
     _
     ,async
     ,config
     ,fs
-    ,path
     ,request
 ) {
     /**
      * An asynchronous Oracle image scraping task
      * 
-     * @param {String} url The URL of the card image
+     * @param {Object} card The card data
+     * @param {Object} set The set the card belongs to
      */
-    var OracleImageTask = function(url) {
-        this.url = url;
+    var OracleImageTask = function(card, set) {
+        this.card = card;
+        this.set = set;
     }
 
     OracleImageTask.prototype = {
@@ -38,7 +38,7 @@ define([
         execute: function(callback) {
             var me = this;
             me.getImage(function() {
-                callback(null, me.url);
+                callback();
             });
         }
 
@@ -48,31 +48,33 @@ define([
          * @param {Function} callback Callback to execute.
          */
         ,getImage: function(callback) {
-            var me = this;
-            request({
-                url: me.url
-                ,encoding: 'binary'
-            }, function(error, response, body) {
-                var filename = _.str.strRightBack(me.url, '/')
-                    ,imagesPath = config.get('oracle.cardImagesPath');
+            var me = this
+                ,localPath = me.card.localImageUrl
+                ,localDirPath = _.str.strLeftBack(localPath, '/')
+                ,reqUrl = me.card.imageUrl;
 
-                if(filename && imagesPath) {
-                    //Write file
-                    var fullDirPath = path.join(__dirname, '..', imagesPath)
-                        ,fullPath = path.join(fullDirPath, filename);
+            console.log(reqUrl);
 
-                    fs.writeFile(fullPath, body, 'binary', function(err) {
-                        if(err) {
-                            console.error('Error writing card image: ', fullpath);
-                            console.error(err);
-                        }
-
-                        callback();
-                    });
-
-                } else {
-                    console.error('Could not parse card image filename from URL: ', me.url);
+            //Only fetch image if we don't already have it
+            fs.exists(localPath, function(exists) {
+                if(exists) {
+                    console.log('Card already exists - skipping: ', localPath);
                     callback();
+                } else {
+                    request({
+                        url: reqUrl
+                        ,encoding: 'binary'
+                    }, function(error, response, body) {
+                        //Write file
+                        fs.writeFile(localPath, body, 'binary', function(err) {
+                            if(err) {
+                                console.error('Error writing card image: ', localPath);
+                                console.error(err);
+                            }
+
+                            callback();
+                        });
+                    });
                 }
             });
         }

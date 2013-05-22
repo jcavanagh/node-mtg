@@ -1,9 +1,9 @@
 {
     "oracle": {
         "cardsUrl": "http://gatherer.wizards.com/Pages/Search/Default.aspx?output=spoiler&method=text&set=[\"%s\"]",
-        "imagesUrl": "http://www.wizards.com/global/images/magic/general/%s.jpg",
+        "imagesUrl": "http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=%s&type=card",
         "cardDataPath": "res/cards/cards.json",
-        "cardImagesPath": "res/cards/images"
+        "cardImagesPath": "res/cards/images/%s/%s"
     },
 
     "mtg" : {

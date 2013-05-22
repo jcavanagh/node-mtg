@@ -21,14 +21,10 @@ define([
     ,OracleCardTask
 ) {
     /**
-     * Constructs an Oracle object.  Arguments should have replaceable sections for card names.
-     * 
-     * @param {String} cardsUrl Base URL for retrieving card data 
-     * @return {type} imagesUrl Base URL for retrieving images
+     * Constructs an Oracle object.
      */
-    var Oracle = function(cardsUrl, imagesUrl) {
-        this.cardsUrl = cardsUrl;
-        this.imagesUrl = imagesUrl;
+    var Oracle = function() {
+
     }
 
     Oracle.prototype = {
@@ -41,9 +37,8 @@ define([
         load: function(fetchImages, sets) {
             //Fill sets array if needed
             if(!sets) {
-                sets = _.map(config.get('mtg.sets'), function(val, key, obj) {
-                    return val.longname;
-                });
+                sets = config.get('mtg.sets');
+                console.log(sets);
             }
 
             var me = this
@@ -51,8 +46,7 @@ define([
 
             for(var idx in sets) {
                 var set = sets[idx]
-                    ,url = _.str.sprintf(this.cardsUrl, set)
-                    ,task = new OracleCardTask(url, me.imagesUrl, fetchImages);
+                    ,task = new OracleCardTask(set, fetchImages);
 
                 tasks.push(task.execute.bind(task));
             }
@@ -76,7 +70,7 @@ define([
             }
 
             //Nuke images folder and execute if successful
-            var fullDirPath = path.join(__dirname, '..', config.get('oracle.cardImagesPath'));
+            var fullDirPath = path.join(__dirname, '..', _.str.sprintf(config.get('oracle.cardImagesPath'), '', ''));
             fs.exists(fullDirPath, function(exists) {
                 var mkdirFn = function() {
                     fs.mkdirs(fullDirPath, function(err) {
@@ -107,5 +101,5 @@ define([
         }
     }
 
-    return new Oracle(config.get('oracle.cardsUrl'), config.get('oracle.imagesUrl'));
+    return new Oracle();
 });
