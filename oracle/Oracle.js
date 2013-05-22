@@ -9,11 +9,15 @@ define([
     'underscore'
     ,'async'
     ,'common/Config'
+    ,'fs-extra'
+    ,'path'
     ,'./OracleCardTask'
 ], function(
     _
     ,async
     ,config
+    ,fs
+    ,path
     ,OracleCardTask
 ) {
     /**
@@ -53,11 +57,52 @@ define([
                 tasks.push(task.execute.bind(task));
             }
 
-            //Execute
-            async.parallelLimit(tasks, 5, function(err, results) {
-                console.log(err);
-                console.log(results);
-                console.log('Set load done!');
+            var tasksFn = function() {
+                //Execute tasks
+                async.parallelLimit(tasks, 5, function(err, results) {
+                    if(err) {
+                        console.error('Error parsing cards - not persisting.');
+                    } else {
+                        //Persist cards
+                        var cardDataFile = fs.writeFile(config.get('oracle.cardDataPath'), JSON.stringify(results), function(err) {
+                            if(err) {
+                                console.log('Failed to persist card data');
+                            } else {
+                                console.log('Card data persisted!');
+                            }
+                        });
+                    }
+                });
+            }
+
+            //Nuke images folder and execute if successful
+            var fullDirPath = path.join(__dirname, '..', config.get('oracle.cardImagesPath'));
+            fs.exists(fullDirPath, function(exists) {
+                var mkdirFn = function() {
+                    fs.mkdirs(fullDirPath, function(err) {
+                        if(err) {
+                            console.error('Failed to create card images directory');
+                            console.error(err);
+                        } else {
+                            //Actually execute oracle tasks
+                            tasksFn();
+                        }
+                    });
+                }
+
+                //If the folder exists, delete and recreate
+                if(exists) {
+                    fs.remove(fullDirPath, function(err) {
+                        if(err) {
+                            console.error('Failed to delete card images directory');
+                            console.error(err);
+                        } else {
+                            mkdirFn();
+                        }
+                    });
+                } else {
+                    mkdirFn();
+                }
             });
         }
     }

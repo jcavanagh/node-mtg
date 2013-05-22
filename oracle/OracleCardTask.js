@@ -33,16 +33,31 @@ define([
 
     OracleCardTask.prototype = {
         /**
+         * Transforms a raw cardname into the appropriate URL form
+         * 
+         * @param {String} cardname The card cardname
+         * @return {String} URL form of card cardname
+         */
+        cleanCardname: function(cardname) {
+            cardname = cardname.replace(/ /g, '_');
+            cardname = cardname.replace(/'/g, '');
+            cardname = cardname.replace(/Æ/g, 'Ae');
+
+            return cardname;
+        }
+
+        /**
          * Executes the task
          *
          * @param {Function} callback The callback to execute when the task is complete.  Will get two args: err and results.
          */
-        execute: function(callback) {
+        ,execute: function(callback) {
             var me = this;
             me.getSpoiler(function(spoiler) {
                 var cards = me.parseSpoiler(spoiler);
 
                 if(cards) {
+                    //Fetch images if needed
                     if(me.fetchImages) {
                         var tasks = [];
                         for(var idx in cards) {
@@ -57,8 +72,8 @@ define([
                             callback(null, results);
                         });
                     } else {
-                        //Return card count
-                        callback(null, cards.count);
+                        //Return cards
+                        callback(null, cards);
                     }
                 } else {
                     //Bad stuff happened
@@ -119,7 +134,7 @@ define([
 
                             //For the name only, the string we want is embedded in an <a> tag
                             card.name = _.str.trim($(this).find('a').text());
-                            card.imageUrl = _.str.sprintf(me.imagesUrl, card.name);
+                            card.imageUrl = _.str.sprintf(me.imagesUrl, me.cleanCardname(card.name));
                             break;
                         case 1:
                             card.cost = _.str.trim($(this).text());
