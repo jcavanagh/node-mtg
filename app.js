@@ -49,6 +49,7 @@ define([
 
     //Underscore extensions
     _.str = underscoreStr;
+    _.str.include('Underscore.string', 'string');
 
     //Wait for config
     config.onConfigLoaded(function() {
@@ -56,6 +57,10 @@ define([
         http.createServer(app).listen(app.get('port'), function(){
           console.log('Express server listening on port ' + app.get('port'));
         });
+
+        //Oracle test
+        var oracle = require('oracle/Oracle');
+        oracle.load();
     }, this);
 
     return app;
