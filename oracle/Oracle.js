@@ -31,10 +31,10 @@ define([
         /**
          * Loads card data and images for MTG sets
          * 
-         * @param {Array} sets A list of long name sets to import.  If not provided, will load all sets.
          * @param {Boolean} fetchImages Whether or not to fetch images.
+         * @param {Array} sets A list of long name sets to import.  If not provided, will load all sets.
          */
-        load: function(sets, fetchImages) {
+        load: function(fetchImages, sets) {
             //Fill sets array if needed
             if(!sets) {
                 sets = _.map(config.get('mtg.sets'), function(val, key, obj) {
@@ -48,7 +48,7 @@ define([
             for(var idx in sets) {
                 var set = sets[idx]
                     ,url = _.str.sprintf(this.cardsUrl, set)
-                    ,task = new OracleCardTask(url, fetchImages);
+                    ,task = new OracleCardTask(url, me.imagesUrl, fetchImages);
 
                 tasks.push(task.execute.bind(task));
             }

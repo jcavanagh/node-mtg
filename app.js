@@ -60,7 +60,7 @@ define([
 
         //Oracle test
         var oracle = require('oracle/Oracle');
-        oracle.load();
+        oracle.load(true);
     }, this);
 
     return app;
