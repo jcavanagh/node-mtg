@@ -82,7 +82,7 @@ define([
                                 callback();
                             } else {
                                 //Execute subtasks
-                                async.parallelLimit(tasks, 10, function(err, results) {
+                                async.parallelLimit(tasks, config.get('oracle.concurrentImages'), function(err, results) {
                                     callback(null, cards);
                                 });
                             }

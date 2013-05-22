@@ -52,7 +52,7 @@ define([
 
             var tasksFn = function() {
                 //Execute tasks
-                async.parallelLimit(tasks, 5, function(err, results) {
+                async.parallelLimit(tasks, config.get('oracle.concurrentSets'), function(err, results) {
                     if(err) {
                         console.error('Error parsing cards - not persisting.');
                     } else {

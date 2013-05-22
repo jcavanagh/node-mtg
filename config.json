@@ -3,7 +3,9 @@
         "cardsUrl": "http://gatherer.wizards.com/Pages/Search/Default.aspx?output=spoiler&method=text&set=[\"%s\"]",
         "imagesUrl": "http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=%s&type=card",
         "cardDataPath": "res/cards/cards.json",
-        "cardImagesPath": "res/cards/images/%s/%s"
+        "cardImagesPath": "res/cards/images/%s/%s",
+        "concurrentSets": 5,
+        "concurrentImages": 10
     },
 
     "mtg" : {
