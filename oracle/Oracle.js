@@ -38,7 +38,6 @@ define([
             //Fill sets array if needed
             if(!sets) {
                 sets = config.get('mtg.sets');
-                console.log(sets);
             }
 
             var me = this

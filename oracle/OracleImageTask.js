@@ -53,8 +53,6 @@ define([
                 ,localDirPath = _.str.strLeftBack(localPath, '/')
                 ,reqUrl = me.card.imageUrl;
 
-            console.log(reqUrl);
-
             //Only fetch image if we don't already have it
             fs.exists(localPath, function(exists) {
                 if(exists) {

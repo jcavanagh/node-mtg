@@ -60,7 +60,7 @@ define([
 
         //Oracle test
         var oracle = require('oracle/Oracle');
-        oracle.load(true, [{name: 'AE', longname: 'Archenemy'}]);
+        oracle.load(true);
     }, this);
 
     return app;
