@@ -21,7 +21,7 @@ define(['fs', 'path'], function(fs, path) {
         //Load config
         this.readConfig(function() {
             //Watch config file
-            fs.watch(configPath, this.onConfigChanged);
+            fs.watch(configPath, this.onConfigChanged.bind(this));
         });
     }
 
