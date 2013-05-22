@@ -1,6 +1,352 @@
 {
     "oracle": {
-        "cardsUrl": "",
-        "imagesUrl": ""
+        "cardsUrl": "http://gatherer.wizards.com/Pages/Search/Default.aspx?output=spoiler&method=text&set=[\"%s\"]",
+        "imagesUrl": "http://www.wizards.com/global/images/magic/general/%s.jpg"
+    },
+
+    "mtg" : {
+        "sets": [{
+            "name": "ARB",
+            "longname": "Alara Reborn"
+        },{
+            "name": "AL",
+            "longname": "Alliances"
+        },{
+            "name": "AQ",
+            "longname": "Antiquities"
+        },{
+            "name": "AP",
+            "longname": "Apocalypse"
+        },{
+            "name": "AN",
+            "longname": "Arabian Nights"
+        },{
+            "name": "AE",
+            "longname": "Archenemy"
+        },{
+            "name": "AVR",
+            "longname": "Avacyn Restored"
+        },{
+            "name": "BR",
+            "longname": "Battle Royale Box Set"
+        },{
+            "name": "BD",
+            "longname": "Beatdown Box Set"
+        },{
+            "name": "BOK",
+            "longname": "Betrayers of Kamigawa"
+        },{
+            "name": "CHK",
+            "longname": "Champions of Kamigawa"
+        },{
+            "name": "CH",
+            "longname": "Chronicles"
+        },{
+            "name": "6E",
+            "longname": "Classic Sixth Edition"
+        },{
+            "name": "CS",
+            "longname": "Coldsnap"
+        },{
+            "name": "CFX",
+            "longname": "Conflux"
+        },{
+            "name": "DS",
+            "longname": "Darksteel"
+        },{
+            "name": "DKA",
+            "longname": "Dark Ascension"
+        },{
+            "name": "DIS",
+            "longname": "Dissension"
+        },{
+            "name": "DDH",
+            "longname": "Duel Decks: Ajani vs. Nicol Bolas"
+        },{
+            "name": "DDC",
+            "longname": "Duel Decks: Divine vs. Demonic"
+        },{
+            "name": "DDF",
+            "longname": "Duel Decks: Elspeth vs. Tezzeret"
+        },{
+            "name": "EVG",
+            "longname": "Duel Decks: Elves vs. Goblins"
+        },{
+            "name": "DDD",
+            "longname": "Duel Decks: Garruk vs. Liliana"
+        },{
+            "name": "DDJ",
+            "longname": "Duel Decks: Izzet vs. Golgari"
+        },{
+            "name": "D2",
+            "longname": "Duel Decks: Jace vs. Chandra"
+        },{
+            "name": "DDG",
+            "longname": "Duel Decks: Knights vs. Dragons"
+        },{
+            "name": "DDE",
+            "longname": "Duel Decks: Phyrexia vs. the Coalition"
+        },{
+            "name": "DDI",
+            "longname": "Duel Decks: Venser vs. Koth"
+        },{
+            "name": "8E",
+            "longname": "Eighth Edition"
+        },{
+            "name": "EVE",
+            "longname": "Eventide"
+        },{
+            "name": "EX",
+            "longname": "Exodus"
+        },{
+            "name": "FE",
+            "longname": "Fallen Empires"
+        },{
+            "name": "FD",
+            "longname": "Fifth Dawn"
+        },{
+            "name": "5E",
+            "longname": "Fifth Edition"
+        },{
+            "name": "4E",
+            "longname": "Fourth Edition"
+        },{
+            "name": "DRB",
+            "longname": "From the Vault: Dragons"
+        },{
+            "name": "FVE",
+            "longname": "From the Vault: Exiled"
+        },{
+            "name": "FVL",
+            "longname": "From the Vault: Legends"
+        },{
+            "name": "FVR",
+            "longname": "From the Vault: Realms"
+        },{
+            "name": "V10",
+            "longname": "From the Vault: Relics"
+        },{
+            "name": "FUT",
+            "longname": "Future Sight"
+        },{
+            "name": "GP",
+            "longname": "Guildpact"
+        },{
+            "name": "GTC",
+            "longname": "Gatecrash"
+        },{
+            "name": "HL",
+            "longname": "Homelands"
+        },{
+            "name": "IA",
+            "longname": "Ice Age"
+        },{
+            "name": "ISD",
+            "longname": "Innistrad"
+        },{
+            "name": "IN",
+            "longname": "Invasion"
+        },{
+            "name": "JU",
+            "longname": "Judgment"
+        },{
+            "name": "LG",
+            "longname": "Legends"
+        },{
+            "name": "LE",
+            "longname": "Legions"
+        },{
+            "name": "A",
+            "longname": "Limited Edition Alpha"
+        },{
+            "name": "B",
+            "longname": "Limited Edition Beta"
+        },{
+            "name": "LRW",
+            "longname": "Lorwyn"
+        },{
+            "name": "M10",
+            "longname": "Magic 2010"
+        },{
+            "name": "M11",
+            "longname": "Magic 2011"
+        },{
+            "name": "M12",
+            "longname": "Magic 2012"
+        },{
+            "name": "M13",
+            "longname": "Magic 2013"
+        },{
+            "name": "COM",
+            "longname": "Magic: The Gathering-Commander"
+        },{
+            "name": "MED",
+            "longname": "Masters Edition"
+        },{
+            "name": "ME2",
+            "longname": "Masters Edition II"
+        },{
+            "name": "ME3",
+            "longname": "Masters Edition III"
+        },{
+            "name": "ME4",
+            "longname": "Masters Edition IV"
+        },{
+            "name": "MM",
+            "longname": "Mercadian Masques"
+        },{
+            "name": "MI",
+            "longname": "Mirage"
+        },{
+            "name": "MR",
+            "longname": "Mirrodin"
+        },{
+            "name": "MBS",
+            "longname": "Mirrodin Besieged"
+        },{
+            "name": "MOR",
+            "longname": "Morningtide"
+        },{
+            "name": "NE",
+            "longname": "Nemesis"
+        },{
+            "name": "NPH",
+            "longname": "New Phyrexia"
+        },{
+            "name": "9E",
+            "longname": "Ninth Edition"
+        },{
+            "name": "OD",
+            "longname": "Odyssey"
+        },{
+            "name": "ON",
+            "longname": "Onslaught"
+        },{
+            "name": "PLC",
+            "longname": "Planar Chaos"
+        },{
+            "name": "PCH",
+            "longname": "Planechase"
+        },{
+            "name": "PC2",
+            "longname": "Planechase 2012 Edition"
+        },{
+            "name": "PS",
+            "longname": "Planeshift"
+        },{
+            "name": "PT",
+            "longname": "Portal"
+        },{
+            "name": "P2",
+            "longname": "Portal Second Age"
+        },{
+            "name": "P3",
+            "longname": "Portal Three Kingdoms"
+        },{
+            "name": "PD2",
+            "longname": "Premium Deck Series: Fire and Lightning"
+        },{
+            "name": "PD3",
+            "longname": "Premium Deck Series: Graveborn"
+        },{
+            "name": "H09",
+            "longname": "Premium Deck Series: Slivers"
+        },{
+            "name": "PR",
+            "longname": "Promo set for Gatherer"
+        },{
+            "name": "PY",
+            "longname": "Prophecy"
+        },{
+            "name": "RAV",
+            "longname": "Ravnica: City of Guilds"
+        },{
+            "name": "R",
+            "longname": "Revised Edition"
+        },{
+            "name": "ROE",
+            "longname": "Rise of the Eldrazi"
+        },{
+            "name": "RTR",
+            "longname": "Return to Ravnica"
+        },{
+            "name": "SOK",
+            "longname": "Saviors of Kamigawa"
+        },{
+            "name": "SOM",
+            "longname": "Scars of Mirrodin"
+        },{
+            "name": "SC",
+            "longname": "Scourge"
+        },{
+            "name": "7E",
+            "longname": "Seventh Edition"
+        },{
+            "name": "SHM",
+            "longname": "Shadowmoor"
+        },{
+            "name": "ALA",
+            "longname": "Shards of Alara"
+        },{
+            "name": "ST",
+            "longname": "Starter 1999"
+        },{
+            "name": "ST2K",
+            "longname": "Starter 2000"
+        },{
+            "name": "SH",
+            "longname": "Stronghold"
+        },{
+            "name": "TE",
+            "longname": "Tempest"
+        },{
+            "name": "10E",
+            "longname": "Tenth Edition"
+        },{
+            "name": "DK",
+            "longname": "The Dark"
+        },{
+            "name": "TSP",
+            "longname": "Time Spiral"
+        },{
+            "name": "TSB",
+            "longname": "Time Spiral \"Timeshifted\""
+        },{
+            "name": "TO",
+            "longname": "Torment"
+        },{
+            "name": "UG",
+            "longname": "Unglued"
+        },{
+            "name": "UNH",
+            "longname": "Unhinged"
+        },{
+            "name": "U",
+            "longname": "Unlimited Edition"
+        },{
+            "name": "UD",
+            "longname": "Urza's Destiny"
+        },{
+            "name": "UL",
+            "longname": "Urza's Legacy"
+        },{
+            "name": "US",
+            "longname": "Urza's Saga"
+        },{
+            "name": "VG",
+            "longname": "Vanguard"
+        },{
+            "name": "VI",
+            "longname": "Visions"
+        },{
+            "name": "WL",
+            "longname": "Weatherlight"
+        },{
+            "name": "WWK",
+            "longname": "Worldwake"
+        },{
+            "name": "ZEN",
+            "longname": "Zendikar"
+        }]
     }
 }
