@@ -22,9 +22,12 @@ define([
      * An asynchronous Oracle card scraping task
      * 
      * @param {String} url The base URL to use for card spoiler data
+     * @param {String} imagesUrl The base URL to use for card spoiler data
+     * @param {Boolean} fetchImages Whether or not to fetch images
      */
-    var OracleCardTask = function(url, fetchImages) {
+    var OracleCardTask = function(url, imagesUrl, fetchImages) {
         this.url = url;
+        this.imagesUrl = imagesUrl;
         this.fetchImages = fetchImages;
     }
 
@@ -41,9 +44,11 @@ define([
 
                 if(cards) {
                     if(me.fetchImages) {
-                        var tasks = []
-                        for(var card in cards) {
-                            var task = new OracleImageTask(card.imageUrl);
+                        var tasks = [];
+                        for(var idx in cards) {
+                            var card = cards[idx]
+                                ,task = new OracleImageTask(card.imageUrl);
+
                             tasks.push(task.execute.bind(task));
                         }
 
@@ -87,7 +92,8 @@ define([
         ,parseSpoiler: function(spoilerHtml) {
             if(spoilerHtml) {
                 //Parse out the main spoiler block
-                var $ = cheerio.load(spoilerHtml)
+                var me = this
+                    ,$ = cheerio.load(spoilerHtml)
                     ,cards = [];
 
                 var card = {};
@@ -113,6 +119,7 @@ define([
 
                             //For the name only, the string we want is embedded in an <a> tag
                             card.name = _.str.trim($(this).find('a').text());
+                            card.imageUrl = _.str.sprintf(me.imagesUrl, card.name);
                             break;
                         case 1:
                             card.cost = _.str.trim($(this).text());
