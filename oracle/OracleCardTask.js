@@ -8,6 +8,7 @@ if (typeof define !== 'function') { var define = require('amdefine')(module) }
 define([
     'underscore'
     ,'async'
+    ,'mtg/Card'
     ,'cheerio'
     ,'common/Config'
     ,'fs-extra'
@@ -16,6 +17,7 @@ define([
 ], function(
     _
     ,async
+    ,card
     ,cheerio
     ,config
     ,fs
@@ -41,13 +43,14 @@ define([
          * @return {String} URL form of card cardname
          */
         cleanCardname: function(cardname) {
+            cardname = cardname.replace(/[',"\!]/g, '');
             cardname = _.str.trim(cardname.replace(/\(.+\)/g, ''));
             cardname = cardname.replace(/ \/\/ /g, '_');
-            cardname = cardname.replace(/ /g, '_');
-            cardname = cardname.replace(/'/g, '');
-            cardname = cardname.replace(/,/g, '');
-            cardname = cardname.replace(/-/g, '_');
+            cardname = cardname.replace(/[ -\/\\]/g, '_');
             cardname = cardname.replace(/Æ/g, 'Ae');
+            // cardname = cardname.replace(/áâ/g, 'a');
+            // cardname = cardname.replace(/û/g, 'u');
+            cardname = _.str.slugify(cardname);
 
             return cardname;
         }
@@ -98,6 +101,10 @@ define([
             });
         }
 
+        ,formatColor: function(color) {
+            return _.str.trim(color);
+        }
+
         ,formatCost: function(cost) {
             return _.str.trim(cost);
         }
@@ -107,10 +114,9 @@ define([
         }
 
         ,formatPtLoyalty: function(pt) {
-            pt = pt.replace('(', '');
-            pt = pt.replace(')', '');
+            pt = pt.replace(/[\(\)]/, '');
 
-            return _.str.trim(pt);
+            return _.str.trim(pt).split('/');
         }
 
         ,formatRules: function(rulesText) {
@@ -124,6 +130,9 @@ define([
         }
 
         ,formatType: function(type) {
+            type = type.replace('—', '-');
+            type = _.str.clean(type);
+
             return _.str.trim(type);
         }
 
@@ -159,19 +168,26 @@ define([
                     ,cards = [];
 
                 var card = {};
-                $('.textspoiler tr > td:nth-child(2)').each(function(i, td) {
-                    //Every card has six TR elements
+                $('.textspoiler tr').each(function(i, tr) {
+                    //Every card has several TR elements
                     //1: Name
                     //2: Cost
-                    //3: Type
-                    //4: P/T
-                    //5: Rules text
-                    //6: Set/rarity
-                    //Each TR has two TD elements, the second of which we want
+                    //3: Color (sometimes)
+                    //4: Type
+                    //5: P/T
+                    //6: Loyalty (planeswalkers only)
+                    //7: Rules text
+                    //8: Set/rarity
 
-                    //Parse it!
-                    switch(i % 6) {
-                        case 0:
+                    //Each TR has two TD elements:
+                    //  The first of which contains the data label
+                    //  the second of which contains the data
+                    var td1 =  $(this).find('td:nth-child(1)')
+                        ,td2 = $(this).find('td:nth-child(2)')
+                        ,td1Text = _.str.trim(td1.text());
+
+                    switch(td1Text) {
+                        case 'Name':
                             //Store finished card if this isn't the first row
                             if(i !== 0) {
                                 // console.log(card);
@@ -180,31 +196,35 @@ define([
                             }
 
                             //For the name only, the string we want is embedded in an <a> tag
-                            var nameEl = $(this).find('a');
+                            var nameEl = td2.find('a');
                             card.cardId = _.str.strRightBack(nameEl.attr('href'), '=');
                             card.name = me.formatName(nameEl.text());
                             card.cleanName = me.cleanCardname(card.name);
                             card.imageUrl = _.str.sprintf(config.get('oracle.imagesUrl'), card.cardId)
                             card.localImageUrl = _.str.sprintf(config.get('oracle.cardImagesPath'), me.set.name, card.cleanName + '.jpg')
                             break;
-                        case 1:
-                            card.cost = me.formatCost($(this).text());
+                        case 'Cost:':
+                            card.cost = me.formatCost(td2.text());
                             break;
-                        case 2:
-                            card.type = me.formatType($(this).text());
+                        case 'Color:':
+                            card.color = me.formatColor(td2.text());
                             break;
-                        case 3:
-                            if(card.type.indexOf('Planeswalker') === -1) {
-                                card.powTgh = me.formatPtLoyalty($(this).text());
-                            } else {
-                                card.loyalty = me.formatPtLoyalty($(this).text());
-                            }
+                        case 'Type:':
+                            card.type = me.formatType(td2.text());
                             break;
-                        case 4:
-                            card.rulesText = me.formatRules($(this).text());
+                        case 'Pow/Tgh:':
+                            var pt = me.formatPtLoyalty(td2.text());
+                            card.pow = pt[0];
+                            card.tgh = pt[1];
                             break;
-                        case 5:
-                            card.setRarity = me.formatSetRarity($(this).text());
+                        case 'Loyalty:':
+                            card.loyalty = me.formatPtLoyalty(td2.text())[0];
+                            break;
+                        case 'Rules Text:':
+                            card.rulesText = me.formatRules(td2.text());
+                            break;
+                        case 'Set/Rarity:':
+                            card.setRarity = me.formatSetRarity(td2.text());
                             break;
                     }
                 });

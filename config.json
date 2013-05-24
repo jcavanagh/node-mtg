@@ -4,8 +4,8 @@
         "imagesUrl": "http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=%s&type=card",
         "cardDataPath": "res/cards/cards.json",
         "cardImagesPath": "res/cards/images/%s/%s",
-        "concurrentSets": 5,
-        "concurrentImages": 10
+        "concurrentSets": 10,
+        "concurrentImages": 20
     },
 
     "mtg" : {
