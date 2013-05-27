@@ -7,6 +7,7 @@ if (typeof define !== 'function') { var define = require('amdefine')(module) }
  **/
 define([
     'underscore'
+    ,'mtg/input/Input'
     ,'mtg/Player'
     ,'mtg/zones/Ante'
     ,'mtg/zones/Battlefield'
@@ -18,6 +19,7 @@ define([
     ,'mtg/zones/Stack'
 ], function(
     _
+    ,Input
     ,Player
     ,Ante
     ,Battlefield
@@ -45,17 +47,18 @@ define([
 
         _.each(decks, function(deck) {
             //Create player
-            var player = new Player();
+            var player = new Player(this);
             this.players.push(player);
 
-            //Create zones
-            commandZones[player.id] = new Command(this, player);
-            exileZones[player.id] = new Exile(this, player);
-            graveyardZones[player.id] = new Graveyard(this, player);
-            handZones[player.id] = new Hand(this, player);
-            libraryZones[player.id] = new Library(this, player, deck);
+            //Create player zones
+            commandZones[player.id] = new Command(player);
+            exileZones[player.id] = new Exile(player);
+            graveyardZones[player.id] = new Graveyard(player);
+            handZones[player.id] = new Hand(player);
+            libraryZones[player.id] = new Library(player, deck);
         }, this);
 
+        //Create global zones and store player zones
         this.zones = {
             ante: new Ante(this)
             ,battlefield: new Battlefield(this)
@@ -66,6 +69,9 @@ define([
             ,library: libraryZones
             ,stack: new Stack(this)
         };
+
+        //Create input handler
+        this.input = new Input(this);
     }
 
     Game.prototype = {

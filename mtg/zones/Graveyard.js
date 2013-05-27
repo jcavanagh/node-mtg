@@ -10,8 +10,8 @@ define([
 ], function(
     Zone
 ) {
-    var Graveyard = function() {
-        
+    var Graveyard = function(player) {
+        this.player = player;
     }
 
     Graveyard.prototype = new Zone();

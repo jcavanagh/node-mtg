@@ -10,8 +10,8 @@ define([
 ], function(
     Zone
 ) {
-    var Exile = function() {
-        
+    var Exile = function(player) {
+        this.player = player
     }
 
     Exile.prototype = new Zone();

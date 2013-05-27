@@ -7,9 +7,11 @@ if (typeof define !== 'function') { var define = require('amdefine')(module) }
  **/
 define([
     'underscore'
+    ,'mtg/input/Input'
     ,'mtg/zones/Zone'
 ], function(
     _
+    ,Input
     ,Zone
 ) {
     var Hand = function(player) {
