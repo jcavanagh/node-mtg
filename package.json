@@ -27,6 +27,7 @@
         "jade": "*",
         "request": ">=2.21.0",
         "socket.io": ">=0.9.14",
+        "socket.io-client": ">=0.9.11",
         "underscore": ">=1.4.4",
         "underscore.string": ">=2.3.0"
     },

@@ -9,18 +9,22 @@ define([
     'underscore'
     ,'common/Config'
     ,'express'
+    ,'routes/GameMgr'
     ,'http'
-    ,'./routes/index'
+    ,'routes/index'
     ,'path'
+    ,'socket.io'
     ,'underscore.string'
-    ,'./routes/user'
+    ,'routes/user'
 ], function(
     _
     ,config
     ,express
+    ,gameMgr
     ,http
     ,index
     ,path
+    ,socketio
     ,underscoreStr
     ,user
 ) {
@@ -47,6 +51,10 @@ define([
     app.get('/', index.index);
     app.get('/users', user.list);
 
+    //Game API
+    app.post('/game/:id/input', gameMgr.input);
+    app.post('/game/:id/event', gameMgr.event);
+
     //Underscore extensions
     _.str = underscoreStr;
     _.str.include('Underscore.string', 'string');
@@ -54,8 +62,18 @@ define([
     //Wait for config
     config.onConfigLoaded(function() {
         //Start server
-        http.createServer(app).listen(app.get('port'), function(){
+        var server = http.createServer(app).listen(app.get('port'), function(){
           console.log('Express server listening on port ' + app.get('port'));
+        });
+
+        //Create socket server for clients
+        socketio.listen(server).on('connection', function(socket) {
+            console.log('socket connected:', socket);
+
+            socket.on('message', function(msg) {
+                console.log('socket msg:', msg);
+                socket.broadcast.emit('message', msg);
+            });
         });
 
         //Oracle test
