@@ -15,12 +15,10 @@ define([
     /**
      * A player's library
      * 
-     * @param {Game} game The game to which this library belongs
      * @param {Player} player The player to which this library belongs
      * @param {Array} cards Array of cards in library
      */
-    var Library = function(game, player, cards) {
-        this.game = game;
+    var Library = function(player, cards) {
         this.player = player;
         this.cards = cards;
     }
@@ -38,13 +36,12 @@ define([
             var me = this
                 ,newFailFn = function() {
                     //TODO: Events
-                    // me.game.emit(me.game.EVENTS.DRAW_CARD_FROM_EMPTY_LIBRARY);
                     failFn();
                 };
 
             var cards = this.removeCards(condition, newFailFn);
             console.log('Drew', cards.length, 'cards');
-            this.game.getHand(this.player).add(cards);
+            this.player.getHand().add(cards);
         }
 
         /**
@@ -57,9 +54,14 @@ define([
         ,exile: function(condition, failFn) {
             var cards = this.removeCards(condition, failFn);
             console.log('Exiled', cards.length, 'cards');
-            this.game.getExile(this.player).add(cards);
+            this.player.getExile().add(cards);
         }
 
+        /**
+         * Whether or not this zone has cards
+         * 
+         * @return {Boolean} Has cards or not
+         */
         ,hasCards: function() {
             return this.cards.length > 0;
         }

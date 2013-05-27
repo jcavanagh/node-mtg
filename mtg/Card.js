@@ -5,7 +5,11 @@ if (typeof define !== 'function') { var define = require('amdefine')(module) }
  * 
  * @author Joe Cavanagh
  **/
-define([], function() {
+define([
+    'underscore'
+], function(
+    _
+) {
     /**
      * A Magic card.
      * 
@@ -35,6 +39,8 @@ define([], function() {
          * @param {Array} abilities Card non-keyword abilities
          */
         this.attr = attributes;
+
+        this.id = _.uniqueId('card_');
 
         /**
          * A card that this card is attached to

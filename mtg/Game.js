@@ -49,22 +49,22 @@ define([
             this.players.push(player);
 
             //Create zones
-            commandZones[player.id] = new Command();
-            exileZones[player.id] = new Exile();
-            graveyardZones[player.id] = new Graveyard();
-            handZones[player.id] = new Hand();
+            commandZones[player.id] = new Command(this, player);
+            exileZones[player.id] = new Exile(this, player);
+            graveyardZones[player.id] = new Graveyard(this, player);
+            handZones[player.id] = new Hand(this, player);
             libraryZones[player.id] = new Library(this, player, deck);
         }, this);
 
         this.zones = {
-            ante: new Ante()
-            ,battlefield: new Battlefield()
+            ante: new Ante(this)
+            ,battlefield: new Battlefield(this)
             ,command: commandZones
             ,exile: exileZones
             ,graveyard: graveyardZones
             ,hand: handZones
             ,library: libraryZones
-            ,stack: new Stack()
+            ,stack: new Stack(this)
         };
     }
 
