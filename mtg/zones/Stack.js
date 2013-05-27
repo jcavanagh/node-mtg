@@ -1,10 +1,20 @@
 if (typeof define !== 'function') { var define = require('amdefine')(module) }
 
 /**
- * DESCRIPTION
+ * Stack zone
  * 
  * @author Joe Cavanagh
  **/
-define([], function() {
-    
+define([
+    'mtg/zones/Zone'
+], function(
+    Zone
+) {
+    var Stack = function() {
+        
+    }
+
+    Stack.prototype = new Zone();
+
+    return Stack;
 });

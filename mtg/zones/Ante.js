@@ -1,10 +1,20 @@
 if (typeof define !== 'function') { var define = require('amdefine')(module) }
 
 /**
- * DESCRIPTION
+ * Ante zone
  * 
  * @author Joe Cavanagh
  **/
-define([], function() {
-    
+define([
+    'mtg/zones/Zone'
+], function(
+    Zone
+) {
+    var Ante = function() {
+        
+    }
+
+    Ante.prototype = new Zone();
+
+    return Ante;
 });

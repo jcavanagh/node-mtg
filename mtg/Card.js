@@ -18,6 +18,7 @@ define([], function() {
          * 
          * @param {String} name Card name
          * @param {String} cost Card mana cost (ex. 2RR)
+         * @param {Number} cmc Card converted mana cost
          * @param {String} color Card color
          * @param {String} type Card type
          * @param {Number} pow Card power

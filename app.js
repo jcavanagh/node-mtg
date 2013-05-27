@@ -59,8 +59,34 @@ define([
         });
 
         //Oracle test
-        var oracle = require('oracle/Oracle');
-        oracle.load(true);
+        // var oracle = require('oracle/Oracle');
+        // oracle.load(true);
+
+        //New game test
+        var Card = require('mtg/Card')
+            ,Game = require('mtg/Game')
+            ,card = new Card({
+                name: 'Test'
+                ,cost: '2RR'
+                ,cmc: 4
+                ,color: 'red'
+                ,type: 'instant'
+                ,rulesText: 'Herp derp'
+            });
+
+        var deck = [];
+        _.times(60, function() { deck.push(_.clone(card)); });
+
+        var game = new Game([_.clone(deck), _.clone(deck)])
+            ,p1 = game.players[0];
+
+        console.log(game);
+        var exiled = game.getLibrary(p1).exile(10);
+        var drawn = game.getLibrary(p1).draw(7);
+
+        console.log('lib:', game.getLibrary(p1).cards.length);
+        console.log('exile:', game.getExile(p1).cards.length);
+        console.log('hand:', game.getHand(p1).cards.length);
     }, this);
 
     return app;

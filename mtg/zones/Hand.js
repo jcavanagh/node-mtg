@@ -1,10 +1,20 @@
 if (typeof define !== 'function') { var define = require('amdefine')(module) }
 
 /**
- * DESCRIPTION
+ * Hand zone (per player)
  * 
  * @author Joe Cavanagh
  **/
-define([], function() {
-    
+define([
+    'mtg/zones/Zone'
+], function(
+    Zone
+) {
+    var Hand = function() {
+
+    }
+
+    Hand.prototype = new Zone();
+
+    return Hand;
 });
