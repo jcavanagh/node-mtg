@@ -6,20 +6,26 @@ if (typeof define !== 'function') { var define = require('amdefine')(module) }
  * @author Joe Cavanagh
  **/
 define([
-    'mtg/steps/Step'
+    'underscore'
+    ,'mtg/steps/Step'
 ], function(
-    Step
+    _
+    ,Step
 ) {
     /**
      * Creates a new DeclareBlock step
      * 
      * @param {Phase} phase The phase to which this Step belongs
      */
-    var DeclareBlock = function(phase) {
+    var DeclareBlockStep = function(phase) {
         this.phase = phase;
     }
 
-    DeclareBlock.prototype = new Step();
+    DeclareBlockStep.prototype = _.extend(DeclareBlockStep.prototype, new Step(), {
+        execute: function() {
+            console.log('DeclareBlockStep');
+        }
+    });
 
-    return DeclareBlock;
+    return DeclareBlockStep;
 });

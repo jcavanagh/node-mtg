@@ -6,20 +6,26 @@ if (typeof define !== 'function') { var define = require('amdefine')(module) }
  * @author Joe Cavanagh
  **/
 define([
-    'mtg/steps/Step'
+    'underscore'
+    ,'mtg/steps/Step'
 ], function(
-    Step
+    _
+    ,Step
 ) {
     /**
      * Creates a new Upkeep step
      * 
      * @param {Phase} phase The phase to which this Step belongs
      */
-    var Upkeep = function(phase) {
+    var UpkeepStep = function(phase) {
         this.phase = phase;
     }
 
-    Upkeep.prototype = new Step();
+    UpkeepStep.prototype = _.extend(UpkeepStep.prototype, new Step(), {
+        execute: function() {
+            console.log('UpkeepStep');
+        }
+    });
 
-    return Upkeep;
+    return UpkeepStep;
 });

@@ -6,20 +6,26 @@ if (typeof define !== 'function') { var define = require('amdefine')(module) }
  * @author Joe Cavanagh
  **/
 define([
-    'mtg/steps/Step'
+    'underscore'
+    ,'mtg/steps/Step'
 ], function(
-    Step
+    _
+    ,Step
 ) {
     /**
      * Creates a new Untap step
      * 
      * @param {Phase} phase The phase to which this Step belongs
      */
-    var Untap = function(phase) {
+    var UntapStep = function(phase) {
         this.phase = phase;
     }
 
-    Untap.prototype = new Step();
+    UntapStep.prototype = _.extend(UntapStep.prototype, new Step(), {
+        execute: function() {
+            console.log('UntapStep');
+        }
+    });
 
-    return Untap;
+    return UntapStep;
 });

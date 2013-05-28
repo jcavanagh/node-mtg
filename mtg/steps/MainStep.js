@@ -6,9 +6,11 @@ if (typeof define !== 'function') { var define = require('amdefine')(module) }
  * @author Joe Cavanagh
  **/
 define([
-    'mtg/steps/Step'
+    'underscore'
+    ,'mtg/steps/Step'
 ], function(
-    Step
+    _
+    ,Step
 ) {
     /**
      * Creates a new MainStep step
@@ -19,7 +21,11 @@ define([
         this.phase = phase;
     }
 
-    MainStep.prototype = new Step();
+    MainStep.prototype = _.extend(MainStep.prototype, new Step(), {
+        execute: function() {
+            console.log('MainStep');
+        }
+    });
 
     return MainStep;
 });
