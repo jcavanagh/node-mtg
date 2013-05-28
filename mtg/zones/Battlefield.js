@@ -1,10 +1,20 @@
 if (typeof define !== 'function') { var define = require('amdefine')(module) }
 
 /**
- * DESCRIPTION
+ * Battlefield zone
  * 
  * @author Joe Cavanagh
  **/
-define([], function() {
-    
+define([
+    'mtg/zones/Zone'
+], function(
+    Zone
+) {
+    var Battlefield = function() {
+        
+    }
+
+    Battlefield.prototype = new Zone();
+
+    return Battlefield;
 });

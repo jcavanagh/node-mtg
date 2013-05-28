@@ -5,7 +5,11 @@ if (typeof define !== 'function') { var define = require('amdefine')(module) }
  * 
  * @author Joe Cavanagh
  **/
-define([], function() {
+define([
+    'underscore'
+], function(
+    _
+) {
     /**
      * A Magic card.
      * 
@@ -18,6 +22,7 @@ define([], function() {
          * 
          * @param {String} name Card name
          * @param {String} cost Card mana cost (ex. 2RR)
+         * @param {Number} cmc Card converted mana cost
          * @param {String} color Card color
          * @param {String} type Card type
          * @param {Number} pow Card power
@@ -34,6 +39,8 @@ define([], function() {
          * @param {Array} abilities Card non-keyword abilities
          */
         this.attr = attributes;
+
+        this.id = _.uniqueId('card_');
 
         /**
          * A card that this card is attached to

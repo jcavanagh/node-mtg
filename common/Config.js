@@ -111,7 +111,7 @@ define(['fs', 'path'], function(fs, path) {
                     }
                 } catch(e) {
                     console.error('Error executing config load callback:');
-                    console.error(e);
+                    console.error(e.stack);
                 }
             } else {
                 //Cache the function, bound to its scope

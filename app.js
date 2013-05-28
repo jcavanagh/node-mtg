@@ -9,15 +9,17 @@ define([
     'underscore'
     ,'common/Config'
     ,'express'
+    ,'mtg/GameMgr'
     ,'http'
-    ,'./routes/index'
+    ,'routes/index'
     ,'path'
     ,'underscore.string'
-    ,'./routes/user'
+    ,'routes/user'
 ], function(
     _
     ,config
     ,express
+    ,GameMgr
     ,http
     ,index
     ,path
@@ -54,13 +56,15 @@ define([
     //Wait for config
     config.onConfigLoaded(function() {
         //Start server
-        http.createServer(app).listen(app.get('port'), function(){
-          console.log('Express server listening on port ' + app.get('port'));
+        var server = http.createServer(app).listen(app.get('port'), function(){
+            console.log('Express server listening on port ' + app.get('port'));
         });
 
+        GameMgr.init(server);
+
         //Oracle test
-        var oracle = require('oracle/Oracle');
-        oracle.load(true, [{name: 'UNH', longname: 'Unhinged'}]);
+        // var oracle = require('oracle/Oracle');
+        // oracle.load(true);
     }, this);
 
     return app;
