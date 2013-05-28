@@ -12,10 +12,14 @@ define([], function() {
      * @param {Phase} phase The phase to which this Step belongs
      */
     var Step = function(phase) {
-
+        this.phase = phase;
     }
 
-    Step.prototype = {};
+    Step.prototype = {
+        execute: function() {
+            //Steps should override this with step logic
+        }
+    };
 
     return Step;
 });

@@ -5,17 +5,21 @@ if (typeof define !== 'function') { var define = require('amdefine')(module) }
  * 
  * @author Joe Cavanagh
  **/
-define([], function() {
+define([
+    'mtg/steps/Step'
+], function(
+    Step
+) {
     /**
      * Creates a new Cleanup step
      * 
      * @param {Phase} phase The phase to which this Step belongs
      */
     var Cleanup = function(phase) {
-
+        this.phase = phase;
     }
 
-    Cleanup.prototype = {};
+    Cleanup.prototype = new Step();
 
     return Cleanup;
 });

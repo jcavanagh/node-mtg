@@ -1,21 +1,25 @@
 if (typeof define !== 'function') { var define = require('amdefine')(module) }
 
 /**
- * End step
+ * Draw step
  * 
  * @author Joe Cavanagh
  **/
-define([], function() {
+define([
+    'mtg/steps/Step'
+], function(
+    Step
+) {
     /**
-     * Creates a new End step
+     * Creates a new Draw step
      * 
      * @param {Phase} phase The phase to which this Step belongs
      */
-    var End = function(phase) {
-
+    var Draw = function(phase) {
+        this.phase = phase;
     }
 
-    End.prototype = {};
+    Draw.prototype = new Step();
 
-    return End;
+    return Draw;
 });

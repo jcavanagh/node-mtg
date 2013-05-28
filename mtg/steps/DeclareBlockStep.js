@@ -5,17 +5,21 @@ if (typeof define !== 'function') { var define = require('amdefine')(module) }
  * 
  * @author Joe Cavanagh
  **/
-define([], function() {
+define([
+    'mtg/steps/Step'
+], function(
+    Step
+) {
     /**
      * Creates a new DeclareBlock step
      * 
      * @param {Phase} phase The phase to which this Step belongs
      */
     var DeclareBlock = function(phase) {
-
+        this.phase = phase;
     }
 
-    DeclareBlock.prototype = {};
+    DeclareBlock.prototype = new Step();
 
     return DeclareBlock;
 });

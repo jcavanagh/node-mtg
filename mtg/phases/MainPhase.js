@@ -5,17 +5,27 @@ if (typeof define !== 'function') { var define = require('amdefine')(module) }
  * 
  * @author Joe Cavanagh
  **/
-define([], function() {
+define([
+    'mtg/steps/MainStep'
+    ,'mtg/phases/Phase'
+], function(
+    MainStep
+    ,Phase
+) {
     /**
      * Creates a new Main phase
      * 
      * @param {Turn} turn The turn to which this Phase belongs
      */
     var Main = function(turn) {
+        this.turn = turn;
 
+        this.steps = [
+            new MainStep(this)
+        ];
     }
 
-    Main.prototype = {};
+    Main.prototype = new Phase();
 
     return Main;
 });

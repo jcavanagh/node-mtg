@@ -1,21 +1,25 @@
 if (typeof define !== 'function') { var define = require('amdefine')(module) }
 
 /**
- * DeclareAttack step
+ * Untap step
  * 
  * @author Joe Cavanagh
  **/
-define([], function() {
+define([
+    'mtg/steps/Step'
+], function(
+    Step
+) {
     /**
-     * Creates a new DeclareAttack step
+     * Creates a new Untap step
      * 
      * @param {Phase} phase The phase to which this Step belongs
      */
-    var DeclareAttack = function(phase) {
-
+    var Untap = function(phase) {
+        this.phase = phase;
     }
 
-    DeclareAttack.prototype = {};
+    Untap.prototype = new Step();
 
-    return DeclareAttack;
+    return Untap;
 });

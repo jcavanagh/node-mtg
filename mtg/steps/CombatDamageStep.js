@@ -5,17 +5,21 @@ if (typeof define !== 'function') { var define = require('amdefine')(module) }
  * 
  * @author Joe Cavanagh
  **/
-define([], function() {
+define([
+    'mtg/steps/Step'
+], function(
+    Step
+) {
     /**
      * Creates a new CombatDamage step
      * 
      * @param {Phase} phase The phase to which this Step belongs
      */
     var CombatDamage = function(phase) {
-
+        this.phase = phase;
     }
 
-    CombatDamage.prototype = {};
+    CombatDamage.prototype = new Step();
 
     return CombatDamage;
 });
