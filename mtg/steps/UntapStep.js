@@ -24,6 +24,7 @@ define([
     UntapStep.prototype = _.extend(UntapStep.prototype, new Step(), {
         execute: function() {
             console.log('UntapStep');
+            this.phase.nextStep();
         }
     });
 

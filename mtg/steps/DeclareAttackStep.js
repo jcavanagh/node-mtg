@@ -24,6 +24,7 @@ define([
     DeclareAttackStep.prototype = _.extend(DeclareAttackStep.prototype, new Step(), {
         execute: function() {
             console.log('DeclareAttackStep');
+            this.phase.nextStep();
         }
     });
 

@@ -24,6 +24,7 @@ define([
     CombatDamageStep.prototype = _.extend(CombatDamageStep.prototype, new Step(), {
         execute: function() {
             console.log('CombatDamageStep');
+            this.phase.nextStep();
         }
     });
 

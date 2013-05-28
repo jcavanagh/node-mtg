@@ -24,6 +24,7 @@ define([
     DrawStep.prototype = _.extend(DrawStep.prototype, new Step(), {
         execute: function() {
             console.log('DrawStep');
+            this.phase.nextStep();
         }
     });
 

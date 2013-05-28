@@ -24,6 +24,7 @@ define([
     DeclareBlockStep.prototype = _.extend(DeclareBlockStep.prototype, new Step(), {
         execute: function() {
             console.log('DeclareBlockStep');
+            this.phase.nextStep();
         }
     });
 

@@ -24,6 +24,7 @@ define([
     CleanupStep.prototype = _.extend(CleanupStep.prototype, new Step(), {
         execute: function() {
             console.log('CleanupStep');
+            this.phase.nextStep();
         }
     });
 

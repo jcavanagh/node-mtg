@@ -20,7 +20,11 @@ define([], function() {
     Phase.prototype = {
         begin: function() {
             var step = this.getStep();
-            step.begin();
+            step.execute();
+        }
+
+        ,end: function() {
+            this.turn.nextPhase();
         }
 
         ,getStep: function() {
@@ -35,10 +39,6 @@ define([], function() {
             } else {
                 this.end();
             }
-        }
-
-        ,end: function() {
-            turn.nextPhase();
         }
     };
 

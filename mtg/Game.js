@@ -64,6 +64,12 @@ define([
     }
 
     Game.prototype = {
+        /**
+         * Creates and adds a player to a game
+         * 
+         * @param {Array} deck The player's deck
+         * @return {Player} The created player
+         */
         addPlayer: function(deck) {
             var player = new Player(this);
             this.players.push(player);
@@ -75,7 +81,7 @@ define([
             this.getZone('hand')[player.id] = new Hand(player);
             this.getZone('library')[player.id] = new Library(player, deck);
 
-            return player.id;
+            return player;
         }
 
         /**

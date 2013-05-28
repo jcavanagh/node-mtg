@@ -24,6 +24,7 @@ define([
     EndCombatStep.prototype = _.extend(EndCombatStep.prototype, new Step(), {
         execute: function() {
             console.log('EndCombatStep');
+            this.phase.nextStep();
         }
     });
 

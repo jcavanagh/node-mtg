@@ -7,16 +7,16 @@ if (typeof define !== 'function') { var define = require('amdefine')(module) }
  **/
 define([
     'underscore'
-    ,'mtg/phases/Beginning'
-    ,'mtg/phases/Combat'
-    ,'mtg/phases/Ending'
-    ,'mtg/phases/Main'
+    ,'mtg/phases/BeginningPhase'
+    ,'mtg/phases/CombatPhase'
+    ,'mtg/phases/EndingPhase'
+    ,'mtg/phases/MainPhase'
 ], function(
     _
-    ,Beginning
-    ,Combat
-    ,Ending
-    ,Main
+    ,BeginningPhase
+    ,CombatPhase
+    ,EndingPhase
+    ,MainPhase
 ) {
     /**
      * Creates a Turn for a particular player
@@ -28,15 +28,41 @@ define([
 
         //Create default phases
         this.phases = [
-             new Beginning(this)
-            ,new Main(this)
-            ,new Combat(this)
-            ,new Main(this)
-            ,new Ending(this)
+             new BeginningPhase(this)
+            ,new MainPhase(this)
+            ,new CombatPhase(this)
+            ,new MainPhase(this)
+            ,new EndingPhase(this)
         ]
+
+        this.currentPhase = 0;
     }
 
-    Turn.prototype = {};
+    Turn.prototype = {
+        begin: function() {
+            var phase = this.getPhase();
+            phase.begin();
+        }
+
+        ,end: function() {
+            //FIXME: This seems awkward
+            this.player.game.nextTurn();
+        }
+
+        ,getPhase: function() {
+            return this.phases[this.currentPhase];
+        }
+
+        ,nextPhase: function() {
+            this.currentPhase++;
+            var phase = this.getPhase();
+            if(phase) {
+                phase.begin();
+            } else {
+                this.end();
+            }
+        }
+    };
 
     return Turn;
 });

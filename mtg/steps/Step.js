@@ -18,6 +18,7 @@ define([], function() {
     Step.prototype = {
         execute: function() {
             //Steps should override this with step logic
+            this.phase.nextStep();
         }
     };
 

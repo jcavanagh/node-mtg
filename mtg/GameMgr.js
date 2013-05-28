@@ -27,7 +27,7 @@ define([
          * 
          * @param {String} gameId The game ID
          * @param {Array} Deck The player's deck - array of Cards
-         * @return {String} The new player ID
+         * @return {Player} The new player
          */
         addPlayer: function(gameId, deck) {
             var game = this.games[gameId];
@@ -41,7 +41,7 @@ define([
         /**
          * Creates a new Game
          * 
-         * @return {String} The game ID
+         * @return {Game} The game
          */
         ,createGame: function() {
             var gameId = _.uniqueId('game_')
@@ -49,7 +49,7 @@ define([
 
             this.games[gameId] = game;
 
-            return gameId;
+            return game;
         }
 
         /**
@@ -70,17 +70,23 @@ define([
                 });
 
                 socket.on('game_add_player', function(gameId, deck, callback) {
-                    var playerId = me.addPlayer(gameId, deck);
+                    var player = me.addPlayer(gameId, deck);
                     if(_.isFunction(callback)) {
-                        callback(playerId);
+                        callback(player.id);
                     }
+
+                    //Turn test
+                    var Turn = require('mtg/Turn')
+                        ,turn = new Turn(player);
+
+                    turn.begin();
                 });
 
                 socket.on('game_create', function(callback) {
-                    var gameId = me.createGame();
-                    socket.join(gameId);
+                    var game = me.createGame();
+                    socket.join(game.id);
                     if(_.isFunction(callback)) {
-                        callback(gameId);
+                        callback(game.id);
                     }
                 });
 

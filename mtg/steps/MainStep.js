@@ -24,6 +24,7 @@ define([
     MainStep.prototype = _.extend(MainStep.prototype, new Step(), {
         execute: function() {
             console.log('MainStep');
+            this.phase.nextStep();
         }
     });
 

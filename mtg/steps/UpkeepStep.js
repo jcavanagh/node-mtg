@@ -24,6 +24,7 @@ define([
     UpkeepStep.prototype = _.extend(UpkeepStep.prototype, new Step(), {
         execute: function() {
             console.log('UpkeepStep');
+            this.phase.nextStep();
         }
     });
 

@@ -8,7 +8,7 @@ if (typeof define !== 'function') { var define = require('amdefine')(module) }
 define([
     'mtg/steps/CleanupStep'
     ,'mtg/steps/EndStep'
-    ,'mtg/steps/Phase'
+    ,'mtg/phases/Phase'
 ], function(
     CleanupStep
     ,EndStep
