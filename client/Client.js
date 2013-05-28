@@ -23,18 +23,27 @@ define([
     }
 
     Client.prototype = {
-        connect: function() {
+        addPlayer: function(gameId, deck, callback) {
+            this.socket.emit('game_add_player', gameId, deck, callback);
+        }
+
+        ,connect: function(callback) {
             this.socket = socketio.connect(this.url, {
                 port: this.port
             });
 
             this.socket.on('connect', function() {
                 console.log('client socket connected');
+                callback();
             });
 
-            this.socket.on('broadcast', function(msg) {
-                console.log('client broadcast', msg);
+            this.socket.on('input', function(msg) {
+                console.log('client message', msg);
             });
+        }
+
+        ,newGame: function(callback) {
+            this.socket.emit('game_create', callback);
         }
     };
 

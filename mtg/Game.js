@@ -33,52 +33,55 @@ define([
     /**
      * Creates a new game of Magic
      * 
+     * @param {String} id The game ID
      * @param {Array} decks Multidimensional array of cards - array of Card arrays
      */
-    var Game = function(decks) {
+    var Game = function(id, decks) {
+        this.id = id;
+
         //Create players and init zones
         this.players = [];
 
-        var commandZones = {}
-            ,exileZones = {}
-            ,graveyardZones = {}
-            ,handZones = {}
-            ,libraryZones = {};
-
-        _.each(decks, function(deck) {
-            //Create player
-            var player = new Player(this);
-            this.players.push(player);
-
-            //Create player zones
-            commandZones[player.id] = new Command(player);
-            exileZones[player.id] = new Exile(player);
-            graveyardZones[player.id] = new Graveyard(player);
-            handZones[player.id] = new Hand(player);
-            libraryZones[player.id] = new Library(player, deck);
-        }, this);
-
-        //Create global zones and store player zones
+        //Create global zones and stub player zones
         this.zones = {
             ante: new Ante(this)
             ,battlefield: new Battlefield(this)
-            ,command: commandZones
-            ,exile: exileZones
-            ,graveyard: graveyardZones
-            ,hand: handZones
-            ,library: libraryZones
+            ,command: {}
+            ,exile: {}
+            ,graveyard: {}
+            ,hand: {}
+            ,library: {}
             ,stack: new Stack(this)
         };
+
+        _.each(decks, function(deck) {
+            //Create player
+            this.addPlayer(deck);
+        }, this);
 
         //Create input handler
         this.input = new Input(this);
     }
 
     Game.prototype = {
+        addPlayer: function(deck) {
+            var player = new Player(this);
+            this.players.push(player);
+
+            //Create player zones
+            this.getZone('command')[player.id] = new Command(player);
+            this.getZone('exile')[player.id] = new Exile(player);
+            this.getZone('graveyard')[player.id] = new Graveyard(player);
+            this.getZone('hand')[player.id] = new Hand(player);
+            this.getZone('library')[player.id] = new Library(player, deck);
+
+            return player.id;
+        }
+
         /**
          * Zone getters
          */
-        getAnte: function() { return this.getZone('ante'); }
+        ,getAnte: function() { return this.getZone('ante'); }
         ,getBattlefield: function () { return this.getZone('battlefield'); }
         ,getCommand: function(player) { return this.getZone('command', player); }
         ,getExile: function(player) { return this.getZone('exile', player); }
