@@ -37,8 +37,8 @@ define([
                 callback();
             });
 
-            this.socket.on('input', function(msg) {
-                console.log('client message', msg);
+            this.socket.on('game_input', function(msg) {
+                console.log('client inputmessage', msg);
             });
         }
 

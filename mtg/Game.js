@@ -96,6 +96,10 @@ define([
         ,getLibrary: function(player) { return this.getZone('library', player); }
         ,getStack: function() { return this.getZone('stack'); }
 
+        ,getInput: function() {
+            return this.input;
+        }
+
         /**
          * Retrieves a global zone or a zone for a particular player
          * 
