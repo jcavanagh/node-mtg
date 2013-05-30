@@ -28,17 +28,19 @@ define([
         }
 
         ,connect: function(callback) {
-            this.socket = socketio.connect(this.url, {
-                port: this.port
+            var me = this;
+            me.socket = socketio.connect(me.url, {
+                port: me.port
             });
 
-            this.socket.on('connect', function() {
+            me.socket.on('connect', function() {
                 console.log('client socket connected');
                 callback();
             });
 
-            this.socket.on('game_input', function(msg) {
+            me.socket.on('game_input', function(msg) {
                 console.log('client inputmessage', msg);
+                me.socket.emit('game_input_response', msg.gameId, msg.inputEventId, 'Got it!');
             });
         }
 

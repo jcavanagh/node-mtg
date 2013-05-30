@@ -107,7 +107,7 @@ define([
                     callback();
                 });
 
-                socket.on('input_response', function(gameId, inputEventId, response) {
+                socket.on('game_input_response', function(gameId, inputEventId, response) {
                     var game = me.getGame(gameId);
                     game.getInput().onResponse(inputEventId, response);
                 });
@@ -126,7 +126,8 @@ define([
             if(this.io) {
                 console.log('sending:', event, gameId, inputEventId, eventData);
                 this.io.sockets.to(gameId).emit(event, {
-                    inputEventId: inputEventId
+                    gameId: gameId
+                    ,inputEventId: inputEventId
                     ,eventData: eventData
                 });
             } else {
