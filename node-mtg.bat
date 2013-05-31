@@ -10,6 +10,14 @@ IF "%1" EQU "test" (
     IF "%1" EQU "client" (
         node client.js
     ) ELSE (
-        node app.js
+        IF "%1" EQU "client-debug" (
+            node --debug client.js
+        ) ELSE (
+            IF "%1" EQU "debug" (
+                node --debug app.js
+            ) ELSE (
+                node app.js
+            )
+        )
     )
 )

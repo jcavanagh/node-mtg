@@ -8,6 +8,10 @@ if [ "$1" = "test" ]; then
     node test.js
 elif [ "$1" = "client" ]; then
     node client.js
+elif [ "$1" = "client-debug" ]; then
+    node --debug client.js
+elif [ "$1" = "debug" ]; then
+    node --debug app.js
 else
     node app.js
 fi
