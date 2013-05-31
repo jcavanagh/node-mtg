@@ -6,9 +6,11 @@ if (typeof define !== 'function') { var define = require('amdefine')(module) }
  * @author Joe Cavanagh
  **/
 define([
-    'socket.io-client'
+    'prompt'
+    ,'socket.io-client'
 ], function(
-    socketio
+    prompt
+    ,socketio
 ) {
     /**
      * Creates a node-mtg client
@@ -38,14 +40,42 @@ define([
                 callback();
             });
 
-            me.socket.on('game_input', function(msg) {
-                console.log('client inputmessage', msg);
-                me.socket.emit('game_input_response', msg.gameId, msg.inputEventId, 'Got it!');
+            me.socket.on('game_input', function(gameId, inputEventId, inputEvent) {
+                me.prompt(gameId, inputEventId, inputEvent);
             });
         }
 
         ,newGame: function(callback) {
             this.socket.emit('game_create', callback);
+        }
+
+        ,prompt: function(gameId, inputEventId, inputEvent) {
+            var me = this;
+
+            //Generate prompt message
+            var schema = { properties: {} }
+                ,description = ''
+                ,validationPattern = new RegExp('^[0-' + inputEvent.buttons.length + ']$');
+
+            for(var x in inputEvent.buttons) {
+                var buttonText = inputEvent.buttons[x]
+                description += ' (' + x + ') ' + buttonText;
+            }
+
+            schema.properties.button = {
+                pattern: validationPattern
+                ,description: description
+            }
+
+            //Prompt for input
+            prompt.start();
+            prompt.message = inputEvent.message;
+            prompt.get(schema, function(error, result) {
+                var buttonId = result ? result.button : -1;
+
+                //Send back button ID
+                me.socket.emit('game_input_response', gameId, inputEventId, buttonId);
+            });
         }
     };
 

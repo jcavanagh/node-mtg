@@ -6,9 +6,12 @@ if (typeof define !== 'function') { var define = require('amdefine')(module) }
  * @author Joe Cavanagh
  **/
 define([], function() {
-    var InputEvent = function(eventType, callback) {
-        this.eventType = eventType;
-        this.callback = callback;
+    var InputEvent = function(config) {
+        config = config || {};
+
+        this.eventName = config.eventName;
+        this.message = config.message;
+        this.buttons = config.buttons;
     }
 
     InputEvent.prototype = {

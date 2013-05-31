@@ -109,7 +109,11 @@ define([
 
                 socket.on('game_input_response', function(gameId, inputEventId, response) {
                     var game = me.getGame(gameId);
-                    game.getInput().onResponse(inputEventId, response);
+                    if(game) {
+                        game.getInput().onResponse(inputEventId, response);
+                    } else {
+                        console.error('Could not process input response - no game with ID:', gameId);
+                    }
                 });
             });
         }
@@ -124,12 +128,7 @@ define([
          */
         ,send: function(event, gameId, inputEventId, eventData) {
             if(this.io) {
-                console.log('sending:', event, gameId, inputEventId, eventData);
-                this.io.sockets.to(gameId).emit(event, {
-                    gameId: gameId
-                    ,inputEventId: inputEventId
-                    ,eventData: eventData
-                });
+                this.io.sockets.to(gameId).emit(event, gameId, inputEventId, eventData);
             } else {
                 console.error("Can't send event - no socket!");
             }

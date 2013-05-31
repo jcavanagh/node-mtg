@@ -8,9 +8,11 @@ if (typeof define !== 'function') { var define = require('amdefine')(module) }
 define([
     'underscore'
     ,'mtg/GameMgr'
+    ,'mtg/input/InputEvent'
 ], function(
     _
     ,GameMgr
+    ,InputEvent
 ) {
     var Input = function(game) {
         this.game = game;
@@ -23,15 +25,16 @@ define([
              * Each type is named, and has a message and a button configuration
              * 
              * @param {String} message The input prompt
-             * @param {Object} buttons Map of button types to button text.  Button types are yes and no.
+             * @param {Object} buttons Array of buttons to render.
              */
-            PRIORITY: {
+            PRIORITY: new InputEvent({
                 eventName: 'priority'
-                ,message: 'You have priority - cast spells and activate abilities.'
-                ,buttons: {
-                    yes: 'Pass'
-                }
-            }
+                ,message: 'You have priority - cast spells and activate abilities'
+                ,buttons: [
+                    'Pass'
+                    ,'Do stuff'
+                ]
+            })
         }
 
         ,onResponse: function(inputEventId, response) {
