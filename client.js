@@ -14,6 +14,9 @@ define([
     ,Client
     ,net
 ) {
+    //Spit out our process ID
+    console.log('PID:', process.pid);
+
     //Create a server on a random port to keep the process alive
     //FIXME: Probably a better way to do that...
     net.createServer().listen(0, function() {

@@ -26,6 +26,9 @@ define([
     ,underscoreStr
     ,user
 ) {
+    //Spit out our process ID
+    console.log('PID:', process.pid);
+
     //Create app
     var app = express();
 
