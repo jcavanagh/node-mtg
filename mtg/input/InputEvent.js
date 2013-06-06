@@ -12,6 +12,7 @@ define([], function() {
         this.eventName = config.eventName;
         this.message = config.message;
         this.buttons = config.buttons;
+        this.player = config.player;
     }
 
     InputEvent.prototype = {

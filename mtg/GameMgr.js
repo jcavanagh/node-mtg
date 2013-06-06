@@ -79,18 +79,17 @@ define([
                     }
 
                     //Turn test
-                    var Turn = require('mtg/Turn')
+                    var game = me.getGame(gameId)
+                        ,input = game.getInput()
+                        ,Turn = require('mtg/Turn')
                         ,turn = new Turn(player);
 
-                    // turn.begin();
+                    game.nextTurn();
 
                     //Client input test
-                    var game = me.getGame(gameId)
-                        ,input = game.getInput();
-
-                    input.prompt(input.TYPE.PRIORITY, function(response) {
-                        console.log('input message received:', response);
-                    });
+                    // input.prompt(input.TYPE.PRIORITY, function(response) {
+                    //     console.log('input message received:', response);
+                    // });
                 });
 
                 socket.on('game_create', function(callback) {
