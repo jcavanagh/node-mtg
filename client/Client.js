@@ -55,11 +55,11 @@ define([
             //Generate prompt message
             var schema = { properties: {} }
                 ,description = ''
-                ,validationPattern = new RegExp('^[0-' + inputEvent.buttons.length + ']$');
+                ,validationPattern = new RegExp('^[1-' + inputEvent.buttons.length + ']$');
 
             for(var x in inputEvent.buttons) {
                 var buttonText = inputEvent.buttons[x]
-                description += ' (' + x + ') ' + buttonText;
+                description += ' (' + (x+1) + ') ' + buttonText;
             }
 
             schema.properties.button = {
@@ -74,7 +74,7 @@ define([
                 var buttonId = result ? result.button : -1;
 
                 //Send back button ID
-                me.socket.emit('game_input_response', gameId, inputEventId, buttonId);
+                me.socket.emit('game_input_response', gameId, inputEventId, buttonId - 1);
             });
         }
     };

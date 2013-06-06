@@ -20,6 +20,14 @@ define([], function() {
             //Steps should override this with step logic
             this.phase.nextStep();
         }
+
+        ,getGame: function() {
+            return this.getPlayer().game;
+        }
+
+        ,getPlayer: function() {
+            return this.phase.turn.player;
+        }
     };
 
     return Step;

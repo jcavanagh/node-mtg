@@ -78,11 +78,26 @@ define([
                         callback(player.id);
                     }
 
-                    //Turn test
+                    //Random test stuff
                     var game = me.getGame(gameId)
                         ,input = game.getInput()
                         ,Turn = require('mtg/Turn')
                         ,turn = new Turn(player);
+
+                    //Create some fake battlefield state
+                    var Card = require('mtg/Card')
+                        ,card1 = new Card({
+                            name: 'Card1'
+                            ,abilities: {
+                                'may_choose_not_to_untap': true
+                            }
+                        })
+                        ,card2 = new Card({
+                            name: 'Card2'
+                            ,abilities: {}
+                        });
+
+                    game.getBattlefield().add([card1, card2]);
 
                     game.nextTurn();
 

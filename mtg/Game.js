@@ -45,6 +45,7 @@ define([
         this.players = [];
 
         //Create global zones and stub player zones
+        //Each non-global zone is a map of player -> zone instance
         this.zones = {
             ante: new Ante(this)
             ,battlefield: new Battlefield(this)

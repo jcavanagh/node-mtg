@@ -33,10 +33,10 @@ define([
          * @param {String} cleanName Card name cleaned of special characters and such
          * @param {String} imageUrl Card Gatherer image URL
          * @param {String} localImageUrl Card local image URL
-         * @param {Array} staticEffects Card static effects
-         * @param {Array} triggers Card triggers
-         * @param {Array} keywords Card keywords
-         * @param {Array} abilities Card non-keyword abilities
+         * @param {Object} staticEffects Card static effects
+         * @param {Object} triggers Card triggers
+         * @param {Object} keywords Card keywords
+         * @param {Object} abilities Card non-keyword abilities
          */
         this.attr = attributes;
 
@@ -54,7 +54,13 @@ define([
     }
 
     Card.prototype = {
-        
+        tap: function() {
+
+        }
+
+        ,untap: function() {
+
+        }
     }
 
     return Card;
