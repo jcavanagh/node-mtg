@@ -24,7 +24,12 @@ define([
     DrawStep.prototype = _.extend(DrawStep.prototype, new Step(), {
         execute: function() {
             console.log('DrawStep');
+            this.draw();
             this.phase.nextStep();
+        }
+
+        ,draw: function() {
+            this.getPlayer().getLibrary().draw(1);
         }
     });
 

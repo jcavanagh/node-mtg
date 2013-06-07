@@ -55,6 +55,24 @@ define([
             return this.games[gameId];
         }
 
+        ,getPlayer: function(gameId, playerId) {
+            var game = this.getGame(gameId);
+
+            if(game) {
+                for(var x in game.players) {
+                    var player = game.players[x];
+
+                    if(player && player.id == playerId) {
+                        return player;
+                    }
+                }
+
+                console.error('Failed to find player with id', playerId, 'in game with id', gameId);
+            } else {
+                console.error('Error finding player: Could not find game with id:', gameId);
+            }
+        }
+
         /**
          * Initializes the GameMgr with a socket server
          * 
@@ -80,7 +98,7 @@ define([
 
                     //Random test stuff
                     var game = me.getGame(gameId)
-                        ,input = game.getInput()
+                        ,input = player.getInput()
                         ,Turn = require('mtg/Turn')
                         ,turn = new Turn(player);
 
@@ -121,10 +139,11 @@ define([
                     callback();
                 });
 
-                socket.on('game_input_response', function(gameId, inputEventId, response) {
-                    var game = me.getGame(gameId);
-                    if(game) {
-                        game.getInput().onResponse(inputEventId, response);
+                socket.on('game_input_response', function(gameId, playerId, inputEventId, response) {
+                    var player = me.getPlayer(gameId, playerId);
+
+                    if(player) {
+                        player.getInput().onResponse(inputEventId, response);
                     } else {
                         console.error('Could not process input response - no game with ID:', gameId);
                     }
@@ -137,12 +156,13 @@ define([
          * 
          * @param {String} event The event string
          * @param {String} gameId The game ID
+         * @param {String} playerId The player ID
          * @param {String} inputEventId The event ID 
          * @param {Object} eventData Arbitrary data to send along with the event
          */
-        ,send: function(event, gameId, inputEventId, eventData) {
+        ,send: function(event, gameId, playerId, inputEventId, eventData) {
             if(this.io) {
-                this.io.sockets.to(gameId).emit(event, gameId, inputEventId, eventData);
+                this.io.sockets.to(gameId).emit(event, gameId, playerId, inputEventId, eventData);
             } else {
                 console.error("Can't send event - no socket!");
             }

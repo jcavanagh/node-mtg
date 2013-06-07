@@ -7,7 +7,6 @@ if (typeof define !== 'function') { var define = require('amdefine')(module) }
  **/
 define([
     'underscore'
-    ,'mtg/input/Input'
     ,'mtg/Player'
     ,'mtg/zones/Ante'
     ,'mtg/zones/Battlefield'
@@ -20,7 +19,6 @@ define([
     ,'mtg/Turn'
 ], function(
     _
-    ,Input
     ,Player
     ,Ante
     ,Battlefield
@@ -61,9 +59,6 @@ define([
             //Create player
             this.addPlayer(deck);
         }, this);
-
-        //Create input handler
-        this.input = new Input(this);
     }
 
     Game.prototype = {
@@ -107,10 +102,28 @@ define([
         ,getStack: function() { return this.getZone('stack'); }
 
         /**
-         * Gets the input handler for this game
+         * Loops around through players and assembles an order in which they should receive priority
+         * 
+         * @return {Array} Players, in order of priority
          */
-        ,getInput: function() {
-            return this.input;
+        ,getPriorityList: function() {
+            var activeIndex = _.indexOf(this.activePlayer)
+                ,priorityList;
+
+            if(activeIndex !== -1) {
+                //Starting from the active player, add each in succession to the list, looping around if needed
+                for(var x = activeIndex;x < this.players.length;x++) {
+                    priorityList.push(this.players[x]);
+                }
+
+                for(var y = 0;y < activeIndex;y++) {
+                    priorityList.push(this.players[y]);   
+                }
+            } else {
+                console.error('Could not create priority list - failed to find player:', this.activePlayer);
+            }
+
+            return priorityList;
         }
 
         /**
@@ -156,6 +169,7 @@ define([
             if(this.turns.length > 0) {
                 //Pop it off and begin the turn
                 this.currentTurn = this.turns.pop();
+                this.activePlayer = this.currentTurn.player;
             } else {
                 //Create new turn
                 this.turnRotationIdx++;
@@ -168,6 +182,7 @@ define([
                 var player = this.players[this.turnRotationIdx];
                 if(player) {
                     this.currentTurn = new Turn(player);
+                    this.activePlayer = player;
                 } else {
                     console.error('Cannot find player at index: ', this.turnRotationIdx);
                     return;
@@ -176,6 +191,31 @@ define([
 
             //Begin the turn
             this.currentTurn.begin();
+        }
+
+        /**
+         * Gives all players priority in succession.
+         * Don't provide arguments unless you're really sure you know what you're doing
+         * as this method just recurses with a dwindling player list
+         * 
+         * @param {Array} players The players remaining to give priority to
+         * @param {Function} callback The callback to execute once all players have passed priority
+         */
+        ,priority: function(players, callback) {
+            players = players || this.getPriorityList();
+
+            var me = this
+                ,nextPlayer = players.shift();
+
+            if(nextPlayer) {
+                input.prompt(input.TYPE.PRIORITY, function(response) {
+                    console.log('input message received:', response);
+                    me.priority(players);
+                });
+            } else {
+                //All players have been given priority
+                callback();
+            }
         }
     }
 

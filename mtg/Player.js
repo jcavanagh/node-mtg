@@ -7,14 +7,19 @@ if (typeof define !== 'function') { var define = require('amdefine')(module) }
  **/
 define([
     'underscore'
+    ,'mtg/input/Input'
 ], function(
     _
+    ,Input
 ) {
     var Player = function(game) {
         this.game = game;
         
         //Generate player ID
         this.id = _.uniqueId('player_');
+
+        //Create input handler
+        this.input = new Input(this);
     }
 
     Player.prototype = {
@@ -29,6 +34,13 @@ define([
         ,getHand: function() { return this.game.getHand(this); }
         ,getLibrary: function() { return this.game.getLibrary(this); }
         ,getStack: function() { return this.game.getStack(); }
+
+        /**
+         * Gets the input handler for this player
+         */
+        ,getInput: function() {
+            return this.input;
+        }
     }
 
     return Player;

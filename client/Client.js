@@ -40,8 +40,8 @@ define([
                 callback();
             });
 
-            me.socket.on('game_input', function(gameId, inputEventId, inputEvent) {
-                me.prompt(gameId, inputEventId, inputEvent);
+            me.socket.on('game_input', function(gameId, playerId, inputEventId, inputEvent) {
+                me.prompt(gameId, playerId, inputEventId, inputEvent);
             });
         }
 
@@ -49,7 +49,7 @@ define([
             this.socket.emit('game_create', callback);
         }
 
-        ,prompt: function(gameId, inputEventId, inputEvent) {
+        ,prompt: function(gameId, playerId, inputEventId, inputEvent) {
             var me = this;
 
             //Generate prompt message
@@ -59,7 +59,8 @@ define([
 
             for(var x in inputEvent.buttons) {
                 var buttonText = inputEvent.buttons[x]
-                description += ' (' + (x+1) + ') ' + buttonText;
+                    ,inputNum = parseInt(x, 10) + 1;
+                description += ' (' + inputNum + ') ' + buttonText;
             }
 
             schema.properties.button = {
@@ -71,10 +72,10 @@ define([
             prompt.start();
             prompt.message = inputEvent.message;
             prompt.get(schema, function(error, result) {
-                var buttonId = result ? result.button : -1;
+                var buttonId = result ? parseInt(result.button) - 1 : -1;
 
                 //Send back button ID
-                me.socket.emit('game_input_response', gameId, inputEventId, buttonId - 1);
+                me.socket.emit('game_input_response', gameId, playerId, inputEventId, buttonId);
             });
         }
     };

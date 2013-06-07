@@ -14,9 +14,12 @@ define([
     ,GameMgr
     ,InputEvent
 ) {
-    var Input = function(game) {
-        this.game = game;
+    var Input = function(player) {
+        this.player = player;
         this.events = {};
+
+        //Convenience game ref
+        this.game = this.player.game;
     }
 
     Input.prototype = {
@@ -81,7 +84,7 @@ define([
             this.events[inputEventId] = callback;
 
             //Send event
-            GameMgr.send('game_input', this.game.id, inputEventId, inputEvent);
+            GameMgr.send('game_input', this.game.id, this.player.id, inputEventId, inputEvent);
         }
     }
 

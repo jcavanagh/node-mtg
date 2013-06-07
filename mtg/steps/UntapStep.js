@@ -52,7 +52,7 @@ define([
 
             //Async untap
             if(asyncUntap.length > 0) {
-                var input = this.getGame().getInput()
+                var input = this.getPlayer().getInput()
                     ,asyncTasks = [];
 
                 //Create a prompt for each card
