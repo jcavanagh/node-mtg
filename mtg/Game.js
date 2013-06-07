@@ -208,6 +208,9 @@ define([
                 ,nextPlayer = players.shift();
 
             if(nextPlayer) {
+                //TODO: State based actions
+
+                //Prompt for things
                 input.prompt(input.TYPE.PRIORITY, function(response) {
                     console.log('input message received:', response);
                     me.priority(players);

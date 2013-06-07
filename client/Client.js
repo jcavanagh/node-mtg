@@ -70,7 +70,7 @@ define([
 
             //Prompt for input
             prompt.start();
-            prompt.message = inputEvent.message;
+            prompt.message = '(' + playerId + ') ' + inputEvent.message;
             prompt.get(schema, function(error, result) {
                 var buttonId = result ? parseInt(result.button) - 1 : -1;
 
