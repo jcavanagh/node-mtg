@@ -54,7 +54,15 @@ define([
     }
 
     Card.prototype = {
-        tap: function() {
+        destroy: function() {
+
+        }
+
+        ,sacrifice: function() {
+
+        }
+
+        ,tap: function() {
 
         }
 

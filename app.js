@@ -55,6 +55,7 @@ define([
     //Underscore extensions
     _.str = underscoreStr;
     _.str.include('Underscore.string', 'string');
+    _.emptyFn = function() {};
 
     //Wait for config
     config.onConfigLoaded(function() {

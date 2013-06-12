@@ -24,7 +24,17 @@ define([
     UpkeepStep.prototype = _.extend(UpkeepStep.prototype, new Step(), {
         execute: function() {
             console.log('UpkeepStep');
-            this.phase.nextStep();
+
+            var me = this;
+            me.beginUpkeep(function() {
+                //AP gets priority
+                me.getGame().priority(me.phase.nextStep.bind(me.phase));
+            });
+        }
+
+        ,beginUpkeep: function(callback) {
+            //TODO: Resolve beginning of upkeep and untap triggers
+            callback();
         }
     });
 

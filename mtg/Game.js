@@ -107,8 +107,8 @@ define([
          * @return {Array} Players, in order of priority
          */
         ,getPriorityList: function() {
-            var activeIndex = _.indexOf(this.activePlayer)
-                ,priorityList;
+            var activeIndex = _.indexOf(this.players, this.activePlayer)
+                ,priorityList = [];
 
             if(activeIndex !== -1) {
                 //Starting from the active player, add each in succession to the list, looping around if needed
@@ -198,10 +198,10 @@ define([
          * Don't provide arguments unless you're really sure you know what you're doing
          * as this method just recurses with a dwindling player list
          * 
-         * @param {Array} players The players remaining to give priority to
          * @param {Function} callback The callback to execute once all players have passed priority
+         * @param {Array} players The players remaining to give priority to
          */
-        ,priority: function(players, callback) {
+        ,priority: function(callback, players) {
             players = players || this.getPriorityList();
 
             var me = this
@@ -211,9 +211,10 @@ define([
                 //TODO: State based actions
 
                 //Prompt for things
+                var input = nextPlayer.getInput();
                 input.prompt(input.TYPE.PRIORITY, function(response) {
                     console.log('input message received:', response);
-                    me.priority(players);
+                    me.priority(callback, players);
                 });
             } else {
                 //All players have been given priority
