@@ -28,33 +28,34 @@ define([
          * Draws a given number of cards, or until the provided function returns true
          * 
          * @param {Number|Function} condition A number to draw or a function to execute for each card
-         * @param {Function} [failFn] A function to execute if a draw function does not successfully return
+         * @param {Function} callback The function to execute once we're done drawing
          * @return {Array} All drawn cards
          */
-        draw: function(condition, failFn) {
+        draw: function(condition, callback) {
             //Wrap failure function with a draw card from empty library event
             var me = this
-                ,newFailFn = function() {
-                    //TODO: Events
-                    failFn();
+                ,failFn = function() {
+                    //TODO: Lose the game event
                 };
 
-            var cards = this.removeCards(condition, newFailFn);
+            var cards = this.removeCards(condition, failFn);
             console.log('Drew', cards.length, 'cards');
             this.player.getHand().add(cards);
+            callback();
         }
 
         /**
          * Exiles a given number of cards, or until the provided function returns true
          * 
          * @param {Number|Function} condition A number to exile or a function to execute for each card
-         * @param {Function} [failFn] A function to execute if an exile function does not successfully return
+         * @param {Function} callback The function to execute once we're done exiling
          * @return {Array} All exiled cards
          */
-        ,exile: function(condition, failFn) {
-            var cards = this.removeCards(condition, failFn);
+        ,exile: function(condition, callback) {
+            var cards = this.removeCards(condition);
             console.log('Exiled', cards.length, 'cards');
             this.player.getExile().add(cards);
+            callback();
         }
 
         /**
@@ -70,15 +71,21 @@ define([
          * From the top, removes a given number of cards, or until the provided function returns true
          * 
          * @param {Number|Function} condition A number to remove or a function to execute for each card
-         * @param {Function} [failFn] A function to execute if a remove function does not successfully return
+         * @param {Function} [failFn] A function to execute when we cannot remove the required amount of cards.  Different things need to happen depending on what we're doing to remove these cards (i.e. lose the game if drawing)
          * @return {Array} All removed cards
          */
         ,removeCards: function(condition, failFn) {
-            var cardsRemoved = [];
+            var cardsRemoved = []
+                ,failFn = failFn || function() { console.log('Out of cards :('); };
+
             if(_.isNumber(condition)) {
                 for(var x = 0; x < condition; x++) {
                     if(this.hasCards()) {
                         cardsRemoved.push(this.cards.shift());
+                    } else {
+                        //Out of cards
+                        failFn();
+                        break;
                     }
                 }
             } else if(_.isFunction(condition)) {
