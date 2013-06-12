@@ -24,7 +24,24 @@ define([
     DeclareAttackStep.prototype = _.extend(DeclareAttackStep.prototype, new Step(), {
         execute: function() {
             console.log('DeclareAttackStep');
-            this.phase.nextStep();
+            var me = this;
+            me.beginDeclareAttack(function() {
+                me.declareAttack(function() {
+                    //AP gets priority
+                    me.getGame().priority(me.phase.nextStep.bind(me.phase));
+                });
+            });
+        }
+
+        ,beginDeclareAttack: function(callback) {
+            //TODO: Beginning of phase triggers
+            callback();
+        }
+
+        ,declareAttack: function(callback) {
+            //TODO: Declare attackers
+            //TODO: Attack triggers
+            callback();
         }
     });
 

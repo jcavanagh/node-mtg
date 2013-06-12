@@ -24,7 +24,16 @@ define([
     EndStep.prototype = _.extend(EndStep.prototype, new Step(), {
         execute: function() {
             console.log('EndStep');
-            this.phase.nextStep();
+            var me = this;
+            me.beginEnd(function() {
+                //AP gets priority
+                me.getGame().priority(me.phase.nextStep.bind(me.phase));
+            });
+        }
+
+        ,beginEnd: function(callback) {
+            //TODO: Beginning of phase triggers
+            callback();
         }
     });
 

@@ -24,7 +24,35 @@ define([
     CleanupStep.prototype = _.extend(CleanupStep.prototype, new Step(), {
         execute: function() {
             console.log('CleanupStep');
-            this.phase.nextStep();
+            var me = this;
+            me.discardToHandSize(function() {
+                me.cleanup(function(priority) {
+                    if(priority) {
+                        //AP gets priority
+                        me.getGame().priority(function() {
+                            //TODO: Another cleanup phase
+                        });
+                    } else {
+                        //No priority, move to next phase
+                        me.phase.nextStep();
+                    }
+                });
+            });
+        }
+
+        ,cleanup: function(callback) {
+            var priority = false;
+            //TODO: All these simultaneously
+            //TODO: Remove all damage marked on permanents
+            //TOOD: Until end of turn effects end
+
+            //If we had a trigger or SBA this cleanup phase, AP gets priority
+            callback(priority);
+        }
+
+        ,discardToHandSize: function(callback) {
+            //TODO: AP discards to hand size
+            callback();
         }
     });
 

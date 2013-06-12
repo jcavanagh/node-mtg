@@ -24,7 +24,30 @@ define([
     DeclareBlockStep.prototype = _.extend(DeclareBlockStep.prototype, new Step(), {
         execute: function() {
             console.log('DeclareBlockStep');
-            this.phase.nextStep();
+            var me = this;
+            me.beginDeclareBlock(function() {
+                me.declareBlock(function() {
+                    me.damageAssignmentOrder(function() {
+                        //AP gets priority
+                        me.getGame().priority(me.phase.nextStep.bind(me.phase));
+                    });
+                });
+            });
+        }
+
+        ,beginDeclareBlock: function(callback) {
+            //TODO: Beginning of phase triggers
+            callback();
+        }
+
+        ,damageAssignmentOrder: function(callback) {
+            //TODO: Assignment orders for multi-blocked attackers and multi-blocking defenders (APNAP)
+        }
+
+        ,declareBlock: function(callback) {
+            //TODO: Declare blockers
+            //TODO: Block triggers (on stack after damage assignment orders)
+            callback();
         }
     });
 

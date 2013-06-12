@@ -24,7 +24,23 @@ define([
     EndCombatStep.prototype = _.extend(EndCombatStep.prototype, new Step(), {
         execute: function() {
             console.log('EndCombatStep');
-            this.phase.nextStep();
+            var me = this;
+            me.beginEndCombat(function() {
+                //AP gets priority
+                me.getGame().priority(function() {
+                    me.endEndCombat(phase.nextStep.bind(me.phase));
+                });
+            });
+        }
+
+        ,beginEndCombat: function(callback) {
+            //TODO: Beginning of phase triggers
+            callback();
+        }
+
+        ,endEndCombat: function(callback) {
+            //TODO: Remove all the things from combat
+            callback();
         }
     });
 
