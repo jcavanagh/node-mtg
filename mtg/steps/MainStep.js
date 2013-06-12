@@ -24,7 +24,17 @@ define([
     MainStep.prototype = _.extend(MainStep.prototype, new Step(), {
         execute: function() {
             console.log('MainStep');
-            this.phase.nextStep();
+            var me = this;
+            me.beginMain(function() {
+                //AP gets priority
+                me.getGame().priority(me.phase.nextStep.bind(me.phase));
+            });
+        }
+
+        ,beginMain: function(callback) {
+            //TODO: Beginning of main phase triggers
+            //FIXME: Is there a card that triggers only on a particular main phase?
+            callback();
         }
     });
 
