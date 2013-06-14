@@ -55,6 +55,10 @@ define([
             return this.games[gameId];
         }
 
+        ,getGameList: function() {
+            return _.keys(this.games);
+        }
+
         ,getPlayer: function(gameId, playerId) {
             var game = this.getGame(gameId);
 
@@ -97,32 +101,27 @@ define([
                     }
 
                     //Random test stuff
-                    var game = me.getGame(gameId)
-                        ,input = player.getInput()
-                        ,Turn = require('mtg/Turn')
-                        ,turn = new Turn(player);
+                    // var game = me.getGame(gameId)
+                    //     ,input = player.getInput()
+                    //     ,Turn = require('mtg/Turn')
+                    //     ,turn = new Turn(player);
 
-                    //Create some fake battlefield state
-                    var Card = require('mtg/Card')
-                        ,card1 = new Card({
-                            name: 'Card1'
-                            ,abilities: {
-                                'may_choose_not_to_untap': true
-                            }
-                        })
-                        ,card2 = new Card({
-                            name: 'Card2'
-                            ,abilities: {}
-                        });
+                    // //Create some fake battlefield state
+                    // var Card = require('mtg/Card')
+                    //     ,card1 = new Card({
+                    //         name: 'Card1'
+                    //         ,abilities: {
+                    //             'may_choose_not_to_untap': true
+                    //         }
+                    //     })
+                    //     ,card2 = new Card({
+                    //         name: 'Card2'
+                    //         ,abilities: {}
+                    //     });
 
-                    game.getBattlefield().add([card1, card2]);
+                    // game.getBattlefield().add([card1, card2]);
 
-                    game.nextTurn();
-
-                    //Client input test
-                    // input.prompt(input.TYPE.PRIORITY, function(response) {
-                    //     console.log('input message received:', response);
-                    // });
+                    // game.nextTurn();
                 });
 
                 socket.on('game_create', function(callback) {
@@ -136,7 +135,9 @@ define([
                 socket.on('game_join', function(gameId, callback) {
                     //Rooms are game IDs
                     socket.join(gameId);
-                    callback();
+                    if(_.isFunction(callback)) {
+                        callback();
+                    }
                 });
 
                 socket.on('game_input_response', function(gameId, playerId, inputEventId, response) {
@@ -148,23 +149,43 @@ define([
                         console.error('Could not process input response - no game with ID:', gameId);
                     }
                 });
+
+                socket.on('game_get_list', function(callback) {
+                    if(_.isFunction(callback)) {
+                        callback(me.getGameList());
+                    }
+                });
             });
         }
 
         /**
-         * Sends a socket event to all clients for a particular game
+         * Sends a socket input event to all clients for a particular game
          * 
-         * @param {String} event The event string
+         * @param {String} event The event name
+         * @param {String} gameId The game ID
+         * @param {Object} eventData Arbitrary data to send along with the event
+         */
+        ,send: function(event, gameId, eventData) {
+            if(this.io) {
+                this.io.sockets.to(gameId).emit(event, eventData);
+            } else {
+                console.error("Can't send event - no socket!");
+            }
+        }
+
+        /**
+         * Sends a socket input event to all clients for a particular game
+         * 
          * @param {String} gameId The game ID
          * @param {String} playerId The player ID
          * @param {String} inputEventId The event ID 
          * @param {Object} eventData Arbitrary data to send along with the event
          */
-        ,send: function(event, gameId, playerId, inputEventId, eventData) {
+        ,sendInputEvent: function(gameId, playerId, inputEventId, eventData) {
             if(this.io) {
-                this.io.sockets.to(gameId).emit(event, gameId, playerId, inputEventId, eventData);
+                this.io.sockets.to(gameId).emit('game_input', gameId, playerId, inputEventId, eventData);
             } else {
-                console.error("Can't send event - no socket!");
+                console.error("Can't send input event - no socket!");
             }
         }
     };

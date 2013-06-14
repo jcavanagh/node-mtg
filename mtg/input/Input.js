@@ -84,7 +84,7 @@ define([
             this.events[inputEventId] = callback;
 
             //Send event
-            GameMgr.send('game_input', this.game.id, this.player.id, inputEventId, inputEvent);
+            GameMgr.sendInputEvent(this.game.id, this.player.id, inputEventId, inputEvent);
         }
     }
 

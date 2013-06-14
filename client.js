@@ -37,13 +37,16 @@ define([
             var deck = [];
             _.times(60, function() { deck.push(_.clone(card)); });
 
-            client.newGame(function(gameId) {
-                console.log('Got gameId back:', gameId);
+            //Client startup
+            client.main();
 
-                client.addPlayer(gameId, _.clone(deck), function(playerId) {
-                    console.log('Got playerId back:', playerId);
-                });
-            });
+            // client.newGame(function(gameId) {
+            //     console.log('Got gameId back:', gameId);
+
+            //     client.addPlayer(gameId, _.clone(deck), function(playerId) {
+            //         console.log('Got playerId back:', playerId);
+            //     });
+            // });
             
             // var p1 = game.players[0];
 
