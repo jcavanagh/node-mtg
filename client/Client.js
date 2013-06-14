@@ -35,14 +35,14 @@ define([
                 port: me.port
             });
 
+            //Connect event
             me.socket.on('connect', function() {
                 console.log('client socket connected');
                 callback();
             });
 
-            me.socket.on('game_input', function(gameId, playerId, inputEventId, inputEvent) {
-                me.prompt(gameId, playerId, inputEventId, inputEvent);
-            });
+            //Other socket events
+            me.socket.on('game_input', me.onGameInput.bind(me));
         }
 
         /**
@@ -95,7 +95,7 @@ define([
                                 var gameId = gameList[result - 1];
                                 me.joinGame(gameId, function() {
                                     console.log('Joined game', gameId);
-                                    //Wait for game start
+                                    //TODO: Wait for game start
                                 });
                             }
                         });
@@ -108,6 +108,10 @@ define([
 
         ,newGame: function(callback) {
             this.socket.emit('game_create', callback);
+        }
+
+        ,onGameInput: function(gameId, playerId, inputEventId, inputEvent) {
+            this.prompt(gameId, playerId, inputEventId, inputEvent);
         }
 
         ,prompt: function(gameId, playerId, inputEventId, inputEvent) {

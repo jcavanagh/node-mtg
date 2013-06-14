@@ -89,73 +89,91 @@ define([
             me.io.on('connection', function(socket) {
                 console.log('socket connected');
 
-                //Socket events
-                socket.on('message', function(msg) {
-                    console.log('server got msg:', msg);
-                });
-
-                socket.on('game_add_player', function(gameId, deck, callback) {
-                    var player = me.addPlayer(gameId, deck);
-                    if(_.isFunction(callback)) {
-                        callback(player.id);
-                    }
-
-                    //Random test stuff
-                    // var game = me.getGame(gameId)
-                    //     ,input = player.getInput()
-                    //     ,Turn = require('mtg/Turn')
-                    //     ,turn = new Turn(player);
-
-                    // //Create some fake battlefield state
-                    // var Card = require('mtg/Card')
-                    //     ,card1 = new Card({
-                    //         name: 'Card1'
-                    //         ,abilities: {
-                    //             'may_choose_not_to_untap': true
-                    //         }
-                    //     })
-                    //     ,card2 = new Card({
-                    //         name: 'Card2'
-                    //         ,abilities: {}
-                    //     });
-
-                    // game.getBattlefield().add([card1, card2]);
-
-                    // game.nextTurn();
-                });
-
+                //Socket event handlers
+                socket.on('game_add_player', me.onGameAddPlayer.bind(me));
                 socket.on('game_create', function(callback) {
-                    var game = me.createGame();
+                    var game = me.onGameCreate.call(me, callback);
                     socket.join(game.id);
-                    if(_.isFunction(callback)) {
-                        callback(game.id);
-                    }
                 });
-
-                socket.on('game_join', function(gameId, callback) {
-                    //Rooms are game IDs
-                    socket.join(gameId);
-                    if(_.isFunction(callback)) {
-                        callback();
-                    }
-                });
-
-                socket.on('game_input_response', function(gameId, playerId, inputEventId, response) {
-                    var player = me.getPlayer(gameId, playerId);
-
-                    if(player) {
-                        player.getInput().onResponse(inputEventId, response);
-                    } else {
-                        console.error('Could not process input response - no game with ID:', gameId);
-                    }
-                });
-
-                socket.on('game_get_list', function(callback) {
-                    if(_.isFunction(callback)) {
-                        callback(me.getGameList());
-                    }
-                });
+                socket.on('game_get_list', me.onGameGetList.bind(me));
+                socket.on('game_input_response', me.onGameInputResponse.bind(me));
+                socket.on('game_join', me.onGameJoin.bind(me));              
+                socket.on('player_load_deck', me.onPlayerLoadDeck.bind(me));
+                socket.on('player_ready', me.onPlayerReady.bind(me));
             });
+        }
+
+        ,onGameAddPlayer: function(gameId, deck, callback) {
+            var player = this.addPlayer(gameId, deck);
+            if(_.isFunction(callback)) {
+                callback(player.id);
+            }
+
+            //Random test stuff
+            // var game = this.getGame(gameId)
+            //     ,input = player.getInput()
+            //     ,Turn = require('mtg/Turn')
+            //     ,turn = new Turn(player);
+
+            // //Create some fake battlefield state
+            // var Card = require('mtg/Card')
+            //     ,card1 = new Card({
+            //         name: 'Card1'
+            //         ,abilities: {
+            //             'may_choose_not_to_untap': true
+            //         }
+            //     })
+            //     ,card2 = new Card({
+            //         name: 'Card2'
+            //         ,abilities: {}
+            //     });
+
+            // game.getBattlefield().add([card1, card2]);
+
+            // game.nextTurn();
+        }
+
+        ,onGameCreate: function(callback) {
+            var game = this.createGame();
+            if(_.isFunction(callback)) {
+                callback(game.id);
+            }
+
+            return game;
+        }
+
+        ,onGameGetList: function(callback) {
+            if(_.isFunction(callback)) {
+                callback(this.getGameList());
+            }
+        }
+
+        ,onGameInputResponse: function(gameId, playerId, inputEventId, response) {
+            var player = this.getPlayer(gameId, playerId);
+
+            if(player) {
+                player.getInput().onResponse(inputEventId, response);
+            } else {
+                console.error('Could not process input response - no game with ID:', gameId);
+            }
+        }
+
+        ,onGameJoin: function(gameId, callback) {
+            //Rooms are game IDs
+            socket.join(gameId);
+            if(_.isFunction(callback)) {
+                callback();
+            }
+        }
+
+        ,onPlayerLoadDeck: function() {
+            //TODO: Implement this
+            console.log('onPlayerLoadDeck NYI');
+        }
+
+        ,onPlayerReady: function() {
+            //TODO: Implement this
+            console.log('onPlayerReady NYI');
         }
 
         /**

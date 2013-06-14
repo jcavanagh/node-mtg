@@ -34,7 +34,7 @@ define([
      * Creates a new game of Magic
      * 
      * @param {String} id The game ID
-     * @param {Array} decks Multidimensional array of cards - array of Card arrays
+     * @param {Array} decks Multidimensional array of cards - array of Card arrays (probably for testing only)
      */
     var Game = function(id, decks) {
         this.id = id;
