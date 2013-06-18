@@ -7,6 +7,7 @@ if (typeof define !== 'function') { var define = require('amdefine')(module) }
  **/
 define([
     'underscore'
+    ,'mtg/GameMgr'
     ,'mtg/Player'
     ,'mtg/zones/Ante'
     ,'mtg/zones/Battlefield'
@@ -15,10 +16,12 @@ define([
     ,'mtg/zones/Graveyard'
     ,'mtg/zones/Hand'
     ,'mtg/zones/Library'
+    ,'mtg/zones/Sideboard'
     ,'mtg/zones/Stack'
     ,'mtg/Turn'
 ], function(
     _
+    ,GameMgr
     ,Player
     ,Ante
     ,Battlefield
@@ -27,6 +30,7 @@ define([
     ,Graveyard
     ,Hand
     ,Library
+    ,Sideboard
     ,Stack
     ,Turn
 ) {
@@ -69,7 +73,7 @@ define([
          * @param {String} playerId The player ID to attach to
          * @param {Array} deck Array of Cards
          */
-        ,addDeck: function(playerId, deck) {
+        ,addDeck: function(playerId, deck, sideboard) {
             var player = this.getPlayer(playerId);
 
             if(player) {
@@ -85,9 +89,10 @@ define([
          * Creates and adds a player to a game
          * 
          * @param {Array} deck The player's deck
+         * @param {Array} sideboard The player's sideboard
          * @return {Player} The created player
          */
-        ,addPlayer: function(deck) {
+        ,addPlayer: function(deck, sideboard) {
             var player = new Player(this);
             this.players.push(player);
 
@@ -97,10 +102,9 @@ define([
             this.getZone('graveyard')[player.id] = new Graveyard(player);
             this.getZone('hand')[player.id] = new Hand(player);
             this.getZone('library')[player.id] = new Library(player, deck);
+            this.getZone('sideboard')[player.id] = new Sideboard(player, sideboard);
 
-            if(deck) {
-                this.addDeck(player.id, deck);
-            }
+            this.addDeck(player.id, deck, sideboard);
 
             return player;
         }
@@ -115,6 +119,7 @@ define([
         ,getGraveyard: function(player) { return this.getZone('graveyard', player); }
         ,getHand: function(player) { return this.getZone('hand', player); }
         ,getLibrary: function(player) { return this.getZone('library', player); }
+        ,getSideboard: function(player) { return this.getZone('sideboard', player); }
         ,getStack: function() { return this.getZone('stack'); }
 
         /**
@@ -248,6 +253,17 @@ define([
                 //All players have been given priority
                 callback();
             }
+        }
+
+        /**
+         * Sends a socket event to all clients for this game
+         * Delegates to GameMgr.send()
+         * 
+         * @param {String} event The event name
+         * @param {Object} eventData Arbitrary data to send along with the event
+         */
+        ,send: function(event, eventData) {
+            GameMgr.send(event, this.id, eventData);
         }
     }
 

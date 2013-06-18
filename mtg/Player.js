@@ -33,6 +33,7 @@ define([
         ,getGraveyard: function() { return this.game.getGraveyard(this); }
         ,getHand: function() { return this.game.getHand(this); }
         ,getLibrary: function() { return this.game.getLibrary(this); }
+        ,getSideboard: function() { return this.game.getSideboard(this); }
         ,getStack: function() { return this.game.getStack(); }
 
         /**

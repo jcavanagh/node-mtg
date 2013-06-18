@@ -20,23 +20,24 @@ define([
         /**
          * Card attributes
          * 
-         * @param {String} name Card name
-         * @param {String} cost Card mana cost (ex. 2RR)
-         * @param {Number} cmc Card converted mana cost
-         * @param {String} color Card color
-         * @param {String} type Card type
-         * @param {Number} pow Card power
-         * @param {Number} tgh Card toughness
-         * @param {Number} loyalty Card loyalty
-         * @param {String} rulesText Card rulesText
-         * @param {Array} setRarity Card sets and rarity [{ set: 'set', rarity: 'rarity' }]
-         * @param {String} cleanName Card name cleaned of special characters and such
-         * @param {String} imageUrl Card Gatherer image URL
-         * @param {String} localImageUrl Card local image URL
-         * @param {Object} staticEffects Card static effects
-         * @param {Object} triggers Card triggers
-         * @param {Object} keywords Card keywords
-         * @param {Object} abilities Card non-keyword abilities
+         * @property {Object} attr
+         * @property {String} attr.name Card name
+         * @property {String} attr.cost Card mana cost (ex. 2RR)
+         * @property {Number} attr.cmc Card converted mana cost
+         * @property {String} attr.color Card color
+         * @property {String} attr.type Card type
+         * @property {Number} attr.pow Card power
+         * @property {Number} attr.tgh Card toughness
+         * @property {Number} attr.loyalty Card loyalty
+         * @property {String} attr.rulesText Card rulesText
+         * @property {Array} attr.setRarity Card sets and rarity [{ set: 'set', rarity: 'rarity' }]
+         * @property {String} attr.cleanName Card name cleaned of special characters and such
+         * @property {String} attr.imageUrl Card Gatherer image URL
+         * @property {String} attr.localImageUrl Card local image URL
+         * @property {Object} attr.staticEffects Card static effects
+         * @property {Object} attr.triggers Card triggers
+         * @property {Object} attr.keywords Card keywords
+         * @property {Object} attr.abilities Card non-keyword abilities
          */
         this.attr = attributes;
 
@@ -56,6 +57,10 @@ define([
     Card.prototype = {
         destroy: function() {
 
+        }
+
+        ,isBasicLand: function() {
+            return card.name == 'Forest' || card.name == 'Mountain' || card.name == 'Swamp' || card.name == 'Plains' || card.name == 'Island';
         }
 
         ,sacrifice: function() {
