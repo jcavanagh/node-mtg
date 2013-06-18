@@ -34,9 +34,8 @@ define([
      * Creates a new game of Magic
      * 
      * @param {String} id The game ID
-     * @param {Array} decks Multidimensional array of cards - array of Card arrays (probably for testing only)
      */
-    var Game = function(id, decks) {
+    var Game = function(id) {
         this.id = id;
 
         //Create players and init zones
@@ -54,11 +53,6 @@ define([
             ,library: {}
             ,stack: new Stack(this)
         };
-
-        _.each(decks, function(deck) {
-            //Create player
-            this.addPlayer(deck);
-        }, this);
     }
 
     Game.prototype = {
@@ -68,6 +62,24 @@ define([
          currentTurn: null
         ,turnRotationIdx: -1         //Array index of the current player in normal turn rotation
         ,turns: []                   //Stack of turns to be taken
+
+        /**
+         * Assigns a deck to a player in this game
+         * 
+         * @param {String} playerId The player ID to attach to
+         * @param {Array} deck Array of Cards
+         */
+        ,addDeck: function(playerId, deck) {
+            var player = this.getPlayer(playerId);
+
+            if(player) {
+                var library = player.getLibrary();
+                library.removeAll();
+                library.add(deck);
+            } else {
+                console.error('Failed to assign deck - cannot find player with ID:', playerId);
+            }
+        }
 
         /**
          * Creates and adds a player to a game
@@ -86,6 +98,10 @@ define([
             this.getZone('hand')[player.id] = new Hand(player);
             this.getZone('library')[player.id] = new Library(player, deck);
 
+            if(deck) {
+                this.addDeck(player.id, deck);
+            }
+
             return player;
         }
 
@@ -100,6 +116,18 @@ define([
         ,getHand: function(player) { return this.getZone('hand', player); }
         ,getLibrary: function(player) { return this.getZone('library', player); }
         ,getStack: function() { return this.getZone('stack'); }
+
+        /**
+         * Gets a player ref by ID
+         * 
+         * @param {String} playerId The player ID
+         * @return {Player} The player, if found
+         */
+        ,getPlayer: function(playerId) {
+            return _.find(this.players, function(player) {
+                return player.id === playerId;
+            });
+        }
 
         /**
          * Loops around through players and assembles an order in which they should receive priority

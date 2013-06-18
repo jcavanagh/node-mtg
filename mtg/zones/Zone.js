@@ -16,7 +16,7 @@ define([
 
     Zone.prototype = {
         /**
-         * Adds a card to this Zone
+         * Adds a card or array of cards to this Zone
          * 
          * @param {Array|Card} card The card or array of cards to add
          */
@@ -28,6 +28,13 @@ define([
             } else {
                 this.cards.push(cards);
             }
+        }
+
+        /**
+         * Removes all cards from this zone
+         */
+        ,removeAll: function() {
+            this.cards = [];
         }
 
         /**
