@@ -1,0 +1,157 @@
+{
+    "deck": [{
+        "name": "Card1"
+    },{
+        "name": "Card2"
+    },{
+        "name": "Card3"
+    },{
+        "name": "Card4"
+    },{
+        "name": "Card5"
+    },{
+        "name": "Card6"
+    },{
+        "name": "Card7"
+    },{
+        "name": "Card8"
+    },{
+        "name": "Card9"
+    },{
+        "name": "Card10"
+    },{
+        "name": "Card11"
+    },{
+        "name": "Card12"
+    },{
+        "name": "Card13"
+    },{
+        "name": "Card14"
+    },{
+        "name": "Card15"
+    },{
+        "name": "Card16"
+    },{
+        "name": "Card17"
+    },{
+        "name": "Card18"
+    },{
+        "name": "Card19"
+    },{
+        "name": "Card20"
+    },{
+        "name": "Card21"
+    },{
+        "name": "Card22"
+    },{
+        "name": "Card23"
+    },{
+        "name": "Card24"
+    },{
+        "name": "Card25"
+    },{
+        "name": "Card26"
+    },{
+        "name": "Card27"
+    },{
+        "name": "Card28"
+    },{
+        "name": "Card29"
+    },{
+        "name": "Card30"
+    },{
+        "name": "Card31"
+    },{
+        "name": "Card32"
+    },{
+        "name": "Card33"
+    },{
+        "name": "Card34"
+    },{
+        "name": "Card35"
+    },{
+        "name": "Card36"
+    },{
+        "name": "Card37"
+    },{
+        "name": "Card38"
+    },{
+        "name": "Card39"
+    },{
+        "name": "Card40"
+    },{
+        "name": "Card41"
+    },{
+        "name": "Card42"
+    },{
+        "name": "Card43"
+    },{
+        "name": "Card44"
+    },{
+        "name": "Card45"
+    },{
+        "name": "Card46"
+    },{
+        "name": "Card47"
+    },{
+        "name": "Card48"
+    },{
+        "name": "Card49"
+    },{
+        "name": "Card50"
+    },{
+        "name": "Card51"
+    },{
+        "name": "Card52"
+    },{
+        "name": "Card53"
+    },{
+        "name": "Card54"
+    },{
+        "name": "Card55"
+    },{
+        "name": "Card56"
+    },{
+        "name": "Card57"
+    },{
+        "name": "Card58"
+    },{
+        "name": "Card59"
+    },{
+        "name": "Card60"
+    }],
+    
+    "sideboard": [{
+        "name": "Card1"
+    },{
+        "name": "Card2"
+    },{
+        "name": "Card3"
+    },{
+        "name": "Card4"
+    },{
+        "name": "Card5"
+    },{
+        "name": "Card6"
+    },{
+        "name": "Card7"
+    },{
+        "name": "Card8"
+    },{
+        "name": "Card9"
+    },{
+        "name": "Card10"
+    },{
+        "name": "Card11"
+    },{
+        "name": "Card12"
+    },{
+        "name": "Card13"
+    },{
+        "name": "Card14"
+    },{
+        "name": "Card15"
+    },{
+        "name": "Card16"
+    }]
+}

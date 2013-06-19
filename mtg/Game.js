@@ -19,6 +19,7 @@ define([
     ,'mtg/zones/Sideboard'
     ,'mtg/zones/Stack'
     ,'mtg/Turn'
+    ,'mtg/utils/Validation'
 ], function(
     _
     ,GameMgr
@@ -33,6 +34,7 @@ define([
     ,Sideboard
     ,Stack
     ,Turn
+    ,Validation
 ) {
     /**
      * Creates a new game of Magic
@@ -55,6 +57,7 @@ define([
             ,graveyard: {}
             ,hand: {}
             ,library: {}
+            ,sideboard: {}
             ,stack: new Stack(this)
         };
     }
@@ -77,9 +80,20 @@ define([
             var player = this.getPlayer(playerId);
 
             if(player) {
+                //Process and add new library and sideboard
                 var library = player.getLibrary();
                 library.removeAll();
                 library.add(deck);
+
+                var sbZone = player.getSideboard();
+                sbZone.removeAll();
+                sbZone.add(sideboard);
+
+                //Clear other player zones
+                player.getCommand().removeAll();
+                player.getExile().removeAll();
+                player.getGraveyard().removeAll();
+                player.getHand().removeAll();
             } else {
                 console.error('Failed to assign deck - cannot find player with ID:', playerId);
             }
@@ -101,8 +115,8 @@ define([
             this.getZone('exile')[player.id] = new Exile(player);
             this.getZone('graveyard')[player.id] = new Graveyard(player);
             this.getZone('hand')[player.id] = new Hand(player);
-            this.getZone('library')[player.id] = new Library(player, deck);
-            this.getZone('sideboard')[player.id] = new Sideboard(player, sideboard);
+            this.getZone('library')[player.id] = new Library(player);
+            this.getZone('sideboard')[player.id] = new Sideboard(player);
 
             this.addDeck(player.id, deck, sideboard);
 
@@ -264,6 +278,64 @@ define([
          */
         ,send: function(event, eventData) {
             GameMgr.send(event, this.id, eventData);
+        }
+
+        /**
+         * A deck is valid if it has 60 or more cards, 
+         * no more than 4 of any card (including sideboard), 
+         * and if the sideboard is no more than 15 cards
+         * 
+         * @param {Array} deck Main deck Card array
+         * @param {Array} sideboard Sideboard Card array
+         * @return {Boolean} Valid or not
+         */
+        ,validateDeck: function(playerId) {
+            var player = this.getPlayer(playerId)
+                ,deck = player.getLibrary().cards
+                ,sideboard = player.getSideboard().cards;
+
+            //Clean args
+            if(!deck) { 
+                console.error('Cannot validate nonexistent deck');
+                return null;
+            }
+
+            sideboard = sideboard || [];
+
+            //Validate!
+            //Check counts first
+            if(deck.length < 60) {
+                this.send('game_invalid_deck', { message: 'Deck must contain 60 or more cards' });
+                return false;
+            }
+
+            if(sideboard.length > 15) {
+                this.send('game_invalid_sideboard', { message: 'Sideboard must contain no more than 15 cards' });   
+                return false;
+            }
+
+            var cardCounts = Validation.getCardCounts(deck.concat(sideboard))
+                ,invalidCards = _.filter(_.pairs(cardCounts), function(cardCount) {
+                    var card = cardCount[1][0]
+                        ,count = cardCount[1][1];
+
+                    return !card.isBasicLand() && count > 4;
+                });
+
+            console.log(cardCounts);
+
+            if(invalidCards && invalidCards.length > 0) {
+                this.send('game_invalid_cards', {
+                    message: 'Only four copies of a card may exist between your deck and sideboard.'
+                    ,invalidCards: invalidCards
+                });
+
+                return false;
+            }
+
+            //TODO: Check format legality
+
+            return true;
         }
     }
 

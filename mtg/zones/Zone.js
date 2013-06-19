@@ -7,8 +7,10 @@ if (typeof define !== 'function') { var define = require('amdefine')(module) }
  **/
 define([
     'underscore'
+    ,'mtg/Card'
 ], function(
     _
+    ,Card
 ) {
     var Zone = function() {
         this.cards = [];
@@ -21,12 +23,14 @@ define([
          * @param {Array|Card} card The card or array of cards to add
          */
         add: function(cards) {
+            if(!cards) { return; }
+            
             if(_.isArray(cards)) {
                 _.each(cards, function(card) {
-                    this.cards.push(card);
+                    this.cards.push(new Card(card));
                 }, this);
             } else {
-                this.cards.push(cards);
+                this.cards.push(new Card(cards));
             }
         }
 

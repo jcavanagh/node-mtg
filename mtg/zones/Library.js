@@ -16,11 +16,9 @@ define([
      * A player's library
      * 
      * @param {Player} player The player to which this library belongs
-     * @param {Array} cards Array of cards in library
      */
-    var Library = function(player, cards) {
+    var Library = function(player) {
         this.player = player;
-        this.cards = cards;
     }
 
     Library.prototype = _.extend(Library.prototype, new Zone(), {

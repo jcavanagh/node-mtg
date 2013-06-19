@@ -17,6 +17,12 @@ define([
      * @return {type} description
      */
     var Card = function(attributes) {
+        if(!attributes) {
+            console.warn('Card constructor passed no attributes');
+            var e = new Error('failboat');
+            console.log(e.stack);
+        }
+
         /**
          * Card attributes
          * 
@@ -60,7 +66,7 @@ define([
         }
 
         ,isBasicLand: function() {
-            return card.name == 'Forest' || card.name == 'Mountain' || card.name == 'Swamp' || card.name == 'Plains' || card.name == 'Island';
+            return this.attr.name == 'Forest' || this.attr.name == 'Mountain' || this.attr.name == 'Swamp' || this.attr.name == 'Plains' || this.attr.name == 'Island';
         }
 
         ,sacrifice: function() {
