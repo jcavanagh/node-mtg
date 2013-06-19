@@ -3,12 +3,14 @@ if (typeof define !== 'function') { var define = require('amdefine')(module) }
 /**
  * A phase of a turn
  * 
+ * @class mtg.phases.Phase
  * @author Joe Cavanagh
- **/
+ */
 define([], function() {
     /**
      * Creates a new generic phase
      * 
+     * @method
      * @param {Turn} turn The turn to which this Phase belongs
      */
     var Phase = function(turn) {

@@ -3,8 +3,9 @@ if (typeof define !== 'function') { var define = require('amdefine')(module) }
 /**
  * DeclareBlock step
  * 
+ * @class mtg.steps.DeclareBlockStep
  * @author Joe Cavanagh
- **/
+ */
 define([
     'underscore'
     ,'mtg/steps/Step'
@@ -15,6 +16,7 @@ define([
     /**
      * Creates a new DeclareBlock step
      * 
+     * @method
      * @param {Phase} phase The phase to which this Step belongs
      */
     var DeclareBlockStep = function(phase) {

@@ -3,8 +3,9 @@ if (typeof define !== 'function') { var define = require('amdefine')(module) }
 /**
  * A simple text node-mtg client for testing
  * 
+ * @class client.Client
  * @author Joe Cavanagh
- **/
+ */
 define([
     'prompt'
     ,'socket.io-client'
@@ -15,6 +16,7 @@ define([
     /**
      * Creates a node-mtg client
      * 
+     * @method
      * @param {String} url Base server URL
      * @param {String} port Base server port
      */

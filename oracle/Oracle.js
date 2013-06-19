@@ -3,8 +3,9 @@ if (typeof define !== 'function') { var define = require('amdefine')(module) }
 /**
  * Pulls card data from the internets and parses it into usable things
  * 
+ * @class mtg.oracle.Oracle
  * @author Joe Cavanagh
- **/
+ */
 define([
     'underscore'
     ,'async'
@@ -22,6 +23,8 @@ define([
 ) {
     /**
      * Constructs an Oracle object.
+     * 
+     * @method
      */
     var Oracle = function() {
 

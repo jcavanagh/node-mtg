@@ -3,8 +3,9 @@ if (typeof define !== 'function') { var define = require('amdefine')(module) }
 /**
  * Untap step
  * 
+ * @class mtg.steps.UntapStep
  * @author Joe Cavanagh
- **/
+ */
 define([
     'underscore'
     ,'async'
@@ -17,6 +18,7 @@ define([
     /**
      * Creates a new Untap step
      * 
+     * @method
      * @param {Phase} phase The phase to which this Step belongs
      */
     var UntapStep = function(phase) {

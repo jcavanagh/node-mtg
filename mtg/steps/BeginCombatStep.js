@@ -3,8 +3,9 @@ if (typeof define !== 'function') { var define = require('amdefine')(module) }
 /**
  * BeginCombat step
  * 
+ * @class mtg.steps.BeginCombatStep
  * @author Joe Cavanagh
- **/
+ */
 define([
     'underscore'
     ,'mtg/steps/Step'
@@ -15,6 +16,7 @@ define([
     /**
      * Creates a new BeginCombat step
      * 
+     * @method
      * @param {Phase} phase The phase to which this Step belongs
      */
     var BeginCombatStep = function(phase) {

@@ -1,10 +1,11 @@
 if (typeof define !== 'function') { var define = require('amdefine')(module) }
 
 /**
- * DESCRIPTION
+ * Base class for Zones
  * 
+ * @class mtg.zones.Zone
  * @author Joe Cavanagh
- **/
+ */
 define([
     'underscore'
     ,'mtg/Card'

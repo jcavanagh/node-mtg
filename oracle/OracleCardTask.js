@@ -3,8 +3,9 @@ if (typeof define !== 'function') { var define = require('amdefine')(module) }
 /**
  * An Oracle task.  Best module description ever.
  * 
+ * @class mtg.oracle.OracleCardTask
  * @author Joe Cavanagh
- **/
+ */
 define([
     'underscore'
     ,'async'
@@ -27,6 +28,7 @@ define([
     /**
      * An asynchronous Oracle card scraping task
      * 
+     * @method
      * @param {Object} set The set to scrape, from config
      * @param {Boolean} fetchImages Whether or not to fetch images
      */

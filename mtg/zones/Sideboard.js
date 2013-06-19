@@ -3,8 +3,9 @@ if (typeof define !== 'function') { var define = require('amdefine')(module) }
 /**
  * Sideboard zone
  * 
+ * @class mtg.zones.Sideboard
  * @author Joe Cavanagh
- **/
+ */
 define([
     'underscore'
     ,'mtg/zones/Zone'

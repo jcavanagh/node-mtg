@@ -3,8 +3,9 @@ if (typeof define !== 'function') { var define = require('amdefine')(module) }
 /**
  * A Magic card
  * 
+ * @class mtg.Card
  * @author Joe Cavanagh
- **/
+ */
 define([
     'underscore'
 ], function(
@@ -13,6 +14,7 @@ define([
     /**
      * A Magic card.
      * 
+     * @method
      * @param {Object} attributes An object containing all the printed attributes of this card
      * @return {type} description
      */

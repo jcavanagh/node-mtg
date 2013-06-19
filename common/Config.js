@@ -3,14 +3,16 @@ if (typeof define !== 'function') { var define = require('amdefine')(module) }
 /**
  * Local configuration provider
  * 
+ * @class common.Config
  * @author Joe Cavanagh
- **/
+ */
 define(['fs', 'path'], function(fs, path) {
     var CONFIG_PATH = path.join(__dirname, '..', 'config.json');
 
     /**
      * Constructs a Config object
      * 
+     * @method
      * @param {String} configPath Path to config.json
      */
     var Config = function(configPath) {

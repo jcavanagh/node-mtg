@@ -3,8 +3,9 @@ if (typeof define !== 'function') { var define = require('amdefine')(module) }
 /**
  * Gets user input from the client
  * 
+ * @class mtg.input.Input
  * @author Joe Cavanagh
- **/
+ */
 define([
     'underscore'
     ,'mtg/GameMgr'

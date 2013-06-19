@@ -3,8 +3,9 @@ if (typeof define !== 'function') { var define = require('amdefine')(module) }
 /**
  * Random validation utility crap
  * 
+ * @class mtg.utils.Validation
  * @author Joe Cavanagh
- **/
+ */
 define(['underscore'], function(_) {
     return {
         /**

@@ -3,8 +3,9 @@ if (typeof define !== 'function') { var define = require('amdefine')(module) }
 /**
  * MainStep step
  * 
+ * @class mtg.steps.MainStep
  * @author Joe Cavanagh
- **/
+ */
 define([
     'underscore'
     ,'mtg/steps/Step'
@@ -15,6 +16,7 @@ define([
     /**
      * Creates a new MainStep step
      * 
+     * @method
      * @param {Phase} phase The phase to which this Step belongs
      */
     var MainStep = function(phase) {

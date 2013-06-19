@@ -3,8 +3,9 @@ if (typeof define !== 'function') { var define = require('amdefine')(module) }
 /**
  * Library zone (per player)
  * 
+ * @class mtg.zones.Library
  * @author Joe Cavanagh
- **/
+ */
 define([
     'underscore'
     ,'mtg/zones/Zone'
@@ -15,6 +16,7 @@ define([
     /**
      * A player's library
      * 
+     * @method
      * @param {Player} player The player to which this library belongs
      */
     var Library = function(player) {

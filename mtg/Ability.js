@@ -3,8 +3,9 @@ if (typeof define !== 'function') { var define = require('amdefine')(module) }
 /**
  * An ability (activated, static, keyword, or triggered) of a card
  * 
+ * @class mtg.Ability
  * @author Joe Cavanagh
- **/
+ */
 define([], function() {
 
     var Ability = function(game) {

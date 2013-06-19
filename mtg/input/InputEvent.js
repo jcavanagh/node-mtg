@@ -3,8 +3,9 @@ if (typeof define !== 'function') { var define = require('amdefine')(module) }
 /**
  * Describes a single event that requires user input
  * 
+ * @class mtg.input.InputEvent
  * @author Joe Cavanagh
- **/
+ */
 define([], function() {
     var InputEvent = function(config) {
         config = config || {};

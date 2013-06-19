@@ -3,8 +3,9 @@ if (typeof define !== 'function') { var define = require('amdefine')(module) }
 /**
  * Main phase
  * 
+ * @class mtg.phases.MainPhase
  * @author Joe Cavanagh
- **/
+ */
 define([
     'mtg/steps/MainStep'
     ,'mtg/phases/Phase'
@@ -15,6 +16,7 @@ define([
     /**
      * Creates a new Main phase
      * 
+     * @method
      * @param {Turn} turn The turn to which this Phase belongs
      */
     var Main = function(turn) {

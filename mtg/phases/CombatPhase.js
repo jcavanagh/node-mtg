@@ -3,8 +3,9 @@ if (typeof define !== 'function') { var define = require('amdefine')(module) }
 /**
  * Combat phase
  * 
+ * @class mtg.phases.CombatPhase
  * @author Joe Cavanagh
- **/
+ */
 define([
     'mtg/steps/BeginCombatStep'
     ,'mtg/steps/CombatDamageStep'
@@ -23,6 +24,7 @@ define([
     /**
      * Creates a new Combat phase
      * 
+     * @method
      * @param {Turn} turn The turn to which this Phase belongs
      */
     var Combat = function(turn) {

@@ -3,8 +3,9 @@ if (typeof define !== 'function') { var define = require('amdefine')(module) }
 /**
  * THE GAME (you just lost it)
  * 
+ * @class mtg.Game
  * @author Joe Cavanagh
- **/
+ */
 define([
     'underscore'
     ,'mtg/GameMgr'
@@ -39,6 +40,7 @@ define([
     /**
      * Creates a new game of Magic
      * 
+     * @method
      * @param {String} id The game ID
      */
     var Game = function(id) {
@@ -321,8 +323,6 @@ define([
 
                     return !card.isBasicLand() && count > 4;
                 });
-
-            console.log(cardCounts);
 
             if(invalidCards && invalidCards.length > 0) {
                 this.send('game_invalid_cards', {

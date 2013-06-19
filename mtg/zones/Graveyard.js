@@ -3,8 +3,9 @@ if (typeof define !== 'function') { var define = require('amdefine')(module) }
 /**
  * Graveyard zone (per player)
  * 
+ * @class mtg.zones.Graveyard
  * @author Joe Cavanagh
- **/
+ */
 define([
     'mtg/zones/Zone'
 ], function(

@@ -3,8 +3,9 @@ if (typeof define !== 'function') { var define = require('amdefine')(module) }
 /**
  * Defines a player's turn
  * 
+ * @class mtg.Turn
  * @author Joe Cavanagh
- **/
+ */
 define([
     'underscore'
     ,'mtg/phases/BeginningPhase'
@@ -21,6 +22,7 @@ define([
     /**
      * Creates a Turn for a particular player
      * 
+     * @method
      * @param {Player} player The player this turn belongs to
      */
     var Turn = function(player) {
