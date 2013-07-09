@@ -8,6 +8,7 @@ if (typeof define !== 'function') { var define = require('amdefine')(module) }
 define([    
     'underscore'
     ,'common/Config'
+    ,'events'
     ,'express'
     ,'mtg/GameMgr'
     ,'http'
@@ -18,6 +19,7 @@ define([
 ], function(
     _
     ,config
+    ,events
     ,express
     ,GameMgr
     ,http
@@ -45,7 +47,7 @@ define([
 
     // development only
     if ('development' == app.get('env')) {
-      app.use(express.errorHandler());
+        app.use(express.errorHandler());
     }
 
     //Set routes
@@ -56,6 +58,10 @@ define([
     _.str = underscoreStr;
     _.str.include('Underscore.string', 'string');
     _.emptyFn = function() {};
+
+    //All objects inherit from EventEmitter
+    //FIXME: Not sure if this is insane or not, pretty sure it's just awesome
+    Object.prototype = _.extend(Object.prototype, events.EventEmitter.prototype);
 
     //Wait for config
     config.onConfigLoaded(function() {
